@@ -63,7 +63,7 @@ Employee Management System is a website that can help a company keep organized w
 ### Mockups
 
 #### Home Page (h4)
-![alt](assets/images/home_page.jpg)
+![alt](./src/assets/images/home_page.jpg)
 
 
 #### Register Page
