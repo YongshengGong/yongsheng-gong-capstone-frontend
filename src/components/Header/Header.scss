@@ -1,0 +1,36 @@
+@use "../../styles/colors" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/fonts" as *;
+@use "../../styles/topography" as *;
+
+.header {
+    @include flex(row, center, center);
+    width: 100%;
+    height:64px;
+    background-color: transparent;
+    border-bottom:0.1px solid #F7F8F9;
+    font-family: titillium sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    &__logo{
+        @include tablet{
+            position: absolute;
+            left:1rem;
+        }
+    }
+    &__nav {
+        position: absolute;
+        right:1rem;
+        &-list {
+            list-style: none;
+            &-item {
+               font-size: 20px;
+               color:#FFFFFF;
+               &:hover{
+                color:rgba(62, 32, 183, 0.2);
+               }
+            }
+        }
+    }
+}
+
