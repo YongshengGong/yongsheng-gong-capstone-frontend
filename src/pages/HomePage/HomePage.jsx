@@ -1,9 +1,9 @@
 import "./HomePage.scss"
-
+import logo from "../../assets/logo.svg"
 function HomePage() {
     return (
         <>
-          homepage
+          <img src={logo} alt="" />
         </>
     )
 }
