@@ -1,0 +1,6 @@
+@use "./styles/resets.scss";
+html,body{
+  width:100vw;
+  height:100vh;
+  background: linear-gradient(0deg, rgba(208, 208, 118, 0.295),rgba(186, 18, 18, 0.2), rgba(62, 32, 183, 0.2));
+}
