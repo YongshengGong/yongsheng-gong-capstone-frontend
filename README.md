@@ -63,36 +63,35 @@ Employee Management System is a website that can help a company keep organized w
 ### Mockups
 
 #### Home Page (h4)
-<!-- ![alt](home.png) -->
+![alt](src/assets/images/home_page.jpeg)
+
 
 #### Register Page
-<!-- ![](register.png) -->
+<!-- ![]() -->
 
 #### Login Page
-<!-- ![](login.png) -->
+![](src/assets/images/login_page.jpeg)
 
 #### Employees Page
-<!-- ![](enter-location.png) -->
+![](src/assets/images/employee_page.jpeg)
 
 #### Payroll Page
-<!-- ![](view-cafes.png) -->
+![](src/assets/images/payroll_page.jpeg)
 
 #### Tax Page
 <!-- ![](view-cafe.png) -->
 
-#### Task Page
-<!-- ![](view-cafe-rated.png)s -->
+#### Task and Feedback Page
+![alt](src/assets/images/task_page.jpeg)
 
-#### Feedback Page
-
-#### Notes Page
+#### Attendance and Notes Page
+![](src/assets/images/attendence_notes_page.jpeg)
 
 #### Reports Page
+![](src/assets/images/reports_page.jpeg)
 
 
-### Data
 
-<!-- ![](sql-diagram.png) -->
 
 ### Endpoints
 
