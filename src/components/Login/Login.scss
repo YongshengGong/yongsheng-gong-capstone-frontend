@@ -10,6 +10,7 @@
     top: 0;
     left: 0;
     font-family: "titillium";
+    animation: fade-in 0.3s ease-in-out;
 
     @include tablet {
         background-color: rgba(0, 0, 0, 0.5);
@@ -103,11 +104,21 @@
         &-close {
             position: relative;
             top:100px;
-            left:200px;
+            left:30vw;
             @include tablet {
                 left:300px;
                 top:0;
             }
         }
+    }
+}
+
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

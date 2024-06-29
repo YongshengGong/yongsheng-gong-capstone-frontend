@@ -13,14 +13,20 @@
         &-title {
             display: block;
             margin-top: 12rem;
-            font-size: 200px;
+            font-size: 20vw;
             color: white;
             animation: glow 3s infinite alternate;
+            @include desktop{
+                font-size: 15.975rem;
+            }
         }
         &-subtitle{
             display: block;
             color: white;
+            width:50%;
+            font-size: 20px;
             margin-top: 12rem;
+            text-align: center;
         }
     }
 }
