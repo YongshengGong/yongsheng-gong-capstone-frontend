@@ -13,10 +13,8 @@
     font-weight: 600;
     font-style: normal;
     &__logo{
-        @include tablet{
             position: absolute;
             left:1rem;
-        }
     }
     &__nav {
         position: absolute;
@@ -32,5 +30,9 @@
             }
         }
     }
+}
+
+.smooth-appear {
+    animation: fade-in 0.3s ease-in-out; 
 }
 

@@ -5,7 +5,7 @@ import { useState } from "react";
 function Header() {
     const [popup, setPopup] = useState(false);
     const handleLogin = () => {
-        setPopup(true);
+        setTimeout(()=>{setPopup(true)},200);
     }
     return (
         <>
