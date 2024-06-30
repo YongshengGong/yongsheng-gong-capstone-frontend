@@ -1,0 +1,48 @@
+@use "../../styles/colors" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/fonts" as *;
+@use "../../styles/topography" as *;
+
+.user__main-nav{
+    height:100%;
+    width:100%;
+    position: absolute;
+    background-color: rgba(11, 11, 11, 0.5);
+    animation: fade-in 0.3s ease-in-out;
+    z-index:3;
+    &-container{
+        height:100%;
+        width:80%;
+        position: absolute;
+        background-color: #FFFFFF;
+        padding:2rem;
+        &-logo{
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid #E1E1E1;
+            padding-bottom: 1rem;
+        }
+        &-list{
+            list-style: none;
+            &-item{
+                width:100%;
+                background: linear-gradient(0deg, rgba(208, 208, 118, 0.295),rgba(186, 18, 18, 0.2), rgba(62, 32, 183, 0.2));
+                border-radius: 5px;
+                color:rgb(164, 30, 213);
+                margin-top: 0.5rem;
+                height:40px;
+                padding-left: 1rem;
+                @include flex(row,flex-start,center);
+                & span{
+                    display: block;
+                }
+            }
+        }
+    }
+    &--hide{
+        display: none;
+    }
+}
+@include fade-in;
+
+
