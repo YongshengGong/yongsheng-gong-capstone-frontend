@@ -14,8 +14,8 @@ function Login({ popup, setPopup, handleLogin }) {
             password: "",
         }
     )
-    const navFunction=()=>{
-        nav('/UI')
+    const navFunction=(userID)=>{
+        nav(`/User/:${userID}`)
     }
 
     return (

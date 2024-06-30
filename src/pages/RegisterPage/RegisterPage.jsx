@@ -31,8 +31,12 @@ function RegisterPage() {
         company_id:newlyAddedCompany.id,
         team_name:"Default Team"
     });
+    await axios.post(`${port}/teams`,{
+        company_id:newlyAddedCompany.id,
+        team_name:"Manager Team"
+    });
     const res2 = await axios.get(`${port}/teams`);
-    const newlyAddedTeam=res2.data[res2.data.length-1];
+    const newlyAddedTeam=res2.data[res2.data.length-2];
     await axios.post(`${port}/members`,{
         company_id:newlyAddedTeam.company_id,
         team_id:newlyAddedTeam.id,

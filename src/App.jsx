@@ -3,7 +3,7 @@ import { useState} from 'react';
 import axios from "axios";
 import './App.scss'
 import HomePage from "./pages/HomePage/HomePage";
-import UserInterfacePage from "./pages/UserInterfacePage/UserInterfacePage";
+import User from "./pages/User/User";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ApplyPage from "./pages/ApplyPage/ApplyPage";
 
@@ -16,7 +16,8 @@ function App() {
     const res = await axios.post(`${port}/members/login`, login);
     if(res.data){
       setMemberInfo(res.data);
-      navFunction();
+      sessionStorage.setItem('user', JSON.stringify(res.data));
+      navFunction(res.data.id);
     }
     }
     catch(e){
@@ -28,7 +29,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage handleLogin={handleLogin} />} />
-        <Route path="/UI" element={<UserInterfacePage memberInfo={memberInfo}/>} />
+        <Route path="/User/:userID" element={<User/>} />
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
       </Routes>
