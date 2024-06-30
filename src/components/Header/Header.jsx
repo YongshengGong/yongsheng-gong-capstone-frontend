@@ -5,12 +5,12 @@ import { useState } from "react";
 function Header() {
     const [popup, setPopup] = useState(false);
     const handleLogin = () => {
-        setTimeout(()=>{setPopup(true)},200);
+        setTimeout(() => { setPopup(true) }, 100);
     }
     return (
         <>
             <header className="header">
-                <img className="header__logo" src={logo} alt="logo of EMS" />
+                <img className="header__logo" src={logo} alt="the logo of EMS" onClick={() => { nav("/") }} />
                 <nav className="header__nav">
                     <ul className="header__nav-list">
                         <li className="header__nav-list-item" onClick={handleLogin}>
@@ -19,7 +19,7 @@ function Header() {
                     </ul>
                 </nav>
             </header>
-            <Login popup={popup} setPopup={setPopup}/>
+            <Login popup={popup} setPopup={setPopup} />
         </>
     )
 }
