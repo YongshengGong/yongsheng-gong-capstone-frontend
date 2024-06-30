@@ -6,33 +6,33 @@
 .header {
     @include flex(row, center, center);
     width: 100%;
-    height:64px;
+    height: 64px;
     background-color: transparent;
-    border-bottom:0.1px solid #F7F8F9;
+    border-bottom: 0.1px solid #F7F8F9;
     font-family: titillium sans-serif;
     font-weight: 600;
     font-style: normal;
-    &__logo{
-            position: absolute;
-            left:1rem;
+
+    &__logo {
+        position: absolute;
+        left: 1.22rem;
     }
+
     &__nav {
         position: absolute;
-        right:1rem;
+        right: 1rem;
+
         &-list {
             list-style: none;
+
             &-item {
-               font-size: 20px;
-               color:#FFFFFF;
-               &:hover{
-                color:rgba(62, 32, 183, 0.2);
-               }
+                font-size: 20px;
+                color: #FFFFFF;
+
+                &:hover {
+                    color: rgba(62, 32, 183, 0.2);
+                }
             }
         }
     }
 }
-
-.smooth-appear {
-    animation: fade-in 0.3s ease-in-out; 
-}
-

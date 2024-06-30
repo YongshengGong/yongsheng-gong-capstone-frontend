@@ -3,56 +3,23 @@
 @use "../../styles/fonts" as *;
 @use "../../styles/topography" as *;
 
-.login {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+.apply {
     font-family: "titillium";
     animation: fade-in 0.3s ease-in-out;
 
-    @include tablet {
-        background-color: rgba(0, 0, 0, 0.5);
-        padding-left: 10rem;
-        padding-right: 10rem;
-        @include flex(row, center, center)
-    }
-
-    @include desktop {
-        padding-left: 16rem;
-        padding-right: 16rem;
-    }
-
-    &--hidden {
-        display: none;
-    }
-
-    &__container {
+    &__main {
         @include flex(column, flex-start, center);
-        background-color: white;
+        background-color: transparent;
         width: 100%;
         height: 100%;
         border-radius: 4px;
-
-        @include tablet {
-            width: 620px;
-            min-width: 620px;
-            height: 400px;
-            background: linear-gradient(0deg, rgba(208, 208, 118, 0.295), rgba(186, 18, 18, 0.2), rgba(62, 32, 183, 0.2));
-            background-color: rgba(255, 255, 255, 0.879);
-        }
 
         &-title {
             margin-top: 5rem;
             font-size: 25px;
             margin-bottom: 1rem;
-            color: #323232;
-
-            @include tablet {
-                margin-top: 1rem;
-                color: white;
-            }
+            color: white;
+            text-align: center;
         }
 
         &-form {
@@ -95,28 +62,11 @@
                 &--2 {
                     color: #0095FF;
                     background-color: #FFFFFF;
-                    margin-bottom: 1rem;
-                    font-weight: 900;
-
-                    @include tablet {
-                        background-color: transparent;
-                    }
 
                     &:hover {
                         border: 2px solid #0095FF;
                     }
                 }
-            }
-        }
-
-        &-close {
-            position: relative;
-            top: 100px;
-            left: 30vw;
-
-            @include tablet {
-                left: 300px;
-                top: 0;
             }
         }
     }
