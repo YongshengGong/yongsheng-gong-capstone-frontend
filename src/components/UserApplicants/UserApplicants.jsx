@@ -28,7 +28,7 @@ function UserApplicants({ setHideNav }) {
     return (
         <section className="user__main-applicants" onClick={()=>setSpreadPersonalInfo(false)}>
         {
-            teams.filter(team=>team.team_name=="Applicants' Zone").map(team => {
+            teams.filter(team=>team.team_name=="Applicants' Zone" && team.company_id==user.company_id).map(team => {
                 return (<article className="user__main-applicants-singleTeam" key={team.id}>
                     <span className="user__main-applicants-singleTeam-teamName">{team.team_name}</span>
                     <section className="user__main-applicants-singleTeam-teamMembers">
