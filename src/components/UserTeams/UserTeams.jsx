@@ -4,17 +4,13 @@ import { Input } from 'antd';
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-function UserTeams({ setHideNav }) {
+function UserTeams({ setHideNav, menu }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
     const port = import.meta.env.VITE_PORT;
     const [teams, setTeams] = useState(null);
     const [members, setMembers] = useState(null);
     const [spreadPersonalInfo, setSpreadPersonalInfo] = useState({});
     const [save, setSave] = useState({});
-
-    // const [hasMounted, setHasMounted] = useState(false);
-
-
 
     useEffect(() => {
         const fetch = async () => {
@@ -24,8 +20,7 @@ function UserTeams({ setHideNav }) {
             setMembers(allMembers.data);
         }
         fetch();
-        //   setHasMounted(true);
-    }, []);
+    }, [menu]);
     if (!teams || !members) {
         return (<>loading...</>)
     }
@@ -35,7 +30,7 @@ function UserTeams({ setHideNav }) {
         event.stopPropagation();
     };
     const handleEdit = (member_name, member_id, company_id, team_id, username, password, title, email, phone, address, isBossOrNot, isManagerOrNot, isTeamLeadOrNot) => {
-        setSpreadPersonalInfo({ ...spreadPersonalInfo, [member_name]: true });
+        setSpreadPersonalInfo({ ...spreadPersonalInfo, [member_id]: true });
         setSave({
             ...save,
             [member_id]: {
@@ -57,8 +52,6 @@ function UserTeams({ setHideNav }) {
     const handleSave = (e, editedObject, id) => {
         e.preventDefault();
         const fetch = async () => {
-            // console.log(save[id].team_id);
-            console.log(editedObject);
             const res = await axios.put(`${port}/members/${id}`, editedObject);
             const allTeams = await axios.get(`${port}/teams`);
             setTeams(allTeams.data);
@@ -68,8 +61,8 @@ function UserTeams({ setHideNav }) {
         fetch();
     }
     return (
-        <section className="user__main-teams" onClick={() => setSpreadPersonalInfo(false)}>
-            <h1 className="user__main-teams-title">Welcome {members.find(member=>member.id==user.id).member_name}</h1>
+        <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
+            <h1 className="user__main-teams-title">Welcome {members.find(member => member.id == user.id).member_name}</h1>
             <nav className="user__main-teams-nav">
                 <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                 <Search
@@ -90,9 +83,9 @@ function UserTeams({ setHideNav }) {
                                             <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
                                                 <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isBossOrNot, member.isManagerOrNot, member.isTeamLeadOrNot)}>{member.member_name}</span>
                                                 <section
-                                                    className={`user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info ${spreadPersonalInfo[member.member_name] /*&& hasMounted*/ ?
-                                                            "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info--show" :
-                                                            "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info"
+                                                    className={`user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info ${spreadPersonalInfo[member.id] ?
+                                                        "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info--show" :
+                                                        "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info"
                                                         }`}>
                                                     <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberName"><span>Name:</span><input type="text" value={save[member.id] ? save[member.id].member_name : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_name: e.target.value } })} /></span>
                                                     <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberTitle"><span>Title:</span><input type="text" value={save[member.id] ? save[member.id].member_title : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_title: e.target.value } })} /></span>
@@ -105,7 +98,7 @@ function UserTeams({ setHideNav }) {
                                                         <span>Team:</span>
                                                         <select onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], team_id: (teams.find(team => team.team_name == e.target.value && team.company_id == user.company_id).id) } })}>
                                                             <option hidden>Switch team</option>
-                                                            {teams.filter(team => team.company_id == user.company_id).map(team => { return (<option key={team.id} >{team.team_name}</option>) })}
+                                                            {teams.filter(team => team.company_id == user.company_id && team.team_name != "Applicants' Zone").map(team => { return (<option key={team.id} >{team.team_name}</option>) })}
                                                         </select>
                                                     </span>
                                                     <button type="submit">Save</button>

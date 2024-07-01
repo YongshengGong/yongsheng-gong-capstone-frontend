@@ -1,7 +1,7 @@
 import "./UserNav.scss"
 import React, { useState, useEffect } from 'react';
 import logo from "../../assets/logo.svg";
-function UserNav({ hideNav, setHideNav }) {
+function UserNav({ hideNav, setHideNav, handleMenu }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
     const handleChildClick = (event) => {
         event.stopPropagation();
@@ -12,8 +12,8 @@ function UserNav({ hideNav, setHideNav }) {
                 <div className="user__main-nav-container-logo"><img src={logo} alt="a logo of EMS" /></div>
                 <ul className="user__main-nav-container-list">
                     <li className="user__main-nav-container-list-item"><span>My Profile</span></li>
-                    <li className="user__main-nav-container-list-item"><span>Teams</span></li>
-                    <li className="user__main-nav-container-list-item"><span>Applicants</span></li>
+                    <li className="user__main-nav-container-list-item" onClick={()=>{handleMenu("teams");setHideNav(true)}}><span>Teams</span></li>
+                    <li className="user__main-nav-container-list-item" onClick={()=>{handleMenu("applicants");setHideNav(true)}}><span>Applicants</span></li>
                 </ul>
             </nav>
         </section>
