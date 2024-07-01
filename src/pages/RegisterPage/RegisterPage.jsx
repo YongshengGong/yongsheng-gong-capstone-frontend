@@ -29,14 +29,18 @@ function RegisterPage() {
     const newlyAddedCompany=res1.data[res1.data.length-1];
     await axios.post(`${port}/teams`,{
         company_id:newlyAddedCompany.id,
-        team_name:"Default Team"
+        team_name:"Boss Zone"
     });
     await axios.post(`${port}/teams`,{
         company_id:newlyAddedCompany.id,
-        team_name:"Manager Team"
+        team_name:"Managers' Zone"
+    });
+    await axios.post(`${port}/teams`,{
+        company_id:newlyAddedCompany.id,
+        team_name:"Applicants' Zone"
     });
     const res2 = await axios.get(`${port}/teams`);
-    const newlyAddedTeam=res2.data[res2.data.length-2];
+    const newlyAddedTeam=res2.data[res2.data.length-3];
     await axios.post(`${port}/members`,{
         company_id:newlyAddedTeam.company_id,
         team_id:newlyAddedTeam.id,

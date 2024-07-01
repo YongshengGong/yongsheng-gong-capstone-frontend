@@ -13,7 +13,7 @@ function User() {
       <main className="user__main">
         <UserNav hideNav={hideNav} setHideNav={setHideNav} />
         <UserTeams setHideNav={setHideNav} />
-        {/* <UserApplicants setHideNav={setHideNav}/> */}
+        <UserApplicants setHideNav={setHideNav}/>
       </main>
     </div>
   )

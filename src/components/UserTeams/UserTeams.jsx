@@ -6,11 +6,12 @@ import { useState, useEffect } from "react";
 
 function UserTeams({ setHideNav }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    // console.log(user);
     const port = import.meta.env.VITE_PORT;
     const [teams, setTeams] = useState(null);
     const [members, setMembers] = useState(null);
-    const [spreadPersonalInfo, setSpreadPersonalInfo] = useState(false);
+    const [spreadPersonalInfo, setSpreadPersonalInfo] = useState({});
+    const [save, setSave] = useState({});
+
     useEffect(() => {
         const fetch = async () => {
             const allTeams = await axios.get(`${port}/teams`);
@@ -28,8 +29,40 @@ function UserTeams({ setHideNav }) {
     const handleChildClick = (event) => {
         event.stopPropagation();
     };
+    const handleEdit = (member_name,member_id,company_id,team_id,username,password,title,email,phone,address,isBossOrNot,isManagerOrNot,isTeamLeadOrNot) => {
+        setSpreadPersonalInfo({ ...spreadPersonalInfo, [member_name]: true });
+        setSave({
+            ...save,
+            [member_id]: {
+                company_id: company_id,
+                team_id: team_id,
+                username: username,
+                password: password,
+                member_name: member_name,
+                member_title: title,
+                member_email: email,
+                member_phone: phone,
+                member_address: address,
+                isBossOrNot: isBossOrNot,
+                isManagerOrNot: isManagerOrNot,
+                isTeamLeadOrNot: isTeamLeadOrNot
+            }
+        })
+    }
+    const handleSave = (e,editedObject,id) => {
+      e.preventDefault();
+      const fetch = async () => {
+        const res = await axios.put(`${port}/members/${id}`,editedObject);
+        console.log(res.data);
+        const allTeams = await axios.get(`${port}/teams`);
+        setTeams(allTeams.data);
+        const allMembers = await axios.get(`${port}/members`);
+        setMembers(allMembers.data);
+    }
+    fetch();
+    }
     return (
-        <section className="user__main-teams" onClick={()=>setSpreadPersonalInfo(false)}>
+        <section className="user__main-teams" onClick={() => setSpreadPersonalInfo(false)}>
             <h1 className="user__main-teams-title">Welcome {user.member_name}</h1>
             <nav className="user__main-teams-nav">
                 <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
@@ -41,28 +74,29 @@ function UserTeams({ setHideNav }) {
             </nav>
             <section className="user__main-teams-displayTeams">
                 {
-                    teams.map(team => {
+                    teams.filter(team => team.team_name != "Applicants' Zone").map(team => {
                         return (<article className="user__main-teams-displayTeams-singleTeam" key={team.id}>
                             <span className="user__main-teams-displayTeams-singleTeam-teamName">{team.team_name}</span>
                             <section className="user__main-teams-displayTeams-singleTeam-teamMembers">
                                 {
                                     members.filter(member => member.team_id == team.id).map((member) => {
                                         return (
-                                            <article className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick}>
-                                                <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => setSpreadPersonalInfo(true)}>{member.member_name}</span>
-                                                <section className={spreadPersonalInfo == false ?
-                                                    "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info--hidden" :
-                                                    "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info"
+                                            <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick} onSubmit={(e)=>handleSave(e,save[member.id],member.id)}>
+                                                <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isBossOrNot, member.isManagerOrNot, member.isTeamLeadOrNot)}>{member.member_name}</span>
+                                                <section className={spreadPersonalInfo[member.member_name] == true ?
+                                                    "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info" :
+                                                    "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info--hidden"
                                                 }>
-                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberName"><span>Name:</span><span>{member.member_name}</span></span>
-                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberTitle"><span>Title:</span><span>{member.member_title}</span></span>
-                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberEmail"><span>Email:</span><span>{member.member_email}</span></span>
-                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPhone"><span>Phone:</span><span>{member.member_phone}</span></span>
-                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberAddress"><span>Address:</span><span>{member.member_address}</span></span>
-                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberUsername"><span>Username:</span><span>{member.username}</span></span>
-                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>Password:</span><span>{member.password}</span></span>
+                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberName"><span>Name:</span><input type="text" value={save[member.id]?save[member.id].member_name:""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_name: e.target.value } })} /></span>
+                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberTitle"><span>Title:</span><input type="text" value={save[member.id]?save[member.id].member_title:""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_title: e.target.value } })} /></span>
+                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberEmail"><span>Email:</span><input type="text" value={save[member.id]?save[member.id].member_email:""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_email: e.target.value } })} /></span>
+                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPhone"><span>Phone:</span><input type="text" value={save[member.id]?save[member.id].member_phone:""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_phone: e.target.value } })} /></span>
+                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberAddress"><span>Address:</span><input type="text" value={save[member.id]?save[member.id].member_address:""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_address: e.target.value } })} /></span>
+                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberUsername"><span>Username:</span><input type="text" value={save[member.id]?save[member.id].username:""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], username: e.target.value } })} /></span>
+                                                    <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>Password:</span><input type="text" value={save[member.id]?save[member.id].password:""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
+                                                    <button type="submit">Save</button>
                                                 </section>
-                                            </article>
+                                            </form>
                                         )
                                     })
                                 }
