@@ -8,12 +8,16 @@ function User() {
 
   const user = JSON.parse(sessionStorage.getItem("user"));
   const [hideNav, setHideNav] = useState(true);
+  const [menu,setMenu]=useState('teams');
+  const handleMenu=(state)=>{
+    setMenu(state);
+  }
   return (
     <div className="user">
       <main className="user__main">
-        <UserNav hideNav={hideNav} setHideNav={setHideNav} />
-        <UserTeams setHideNav={setHideNav} />
-        <UserApplicants setHideNav={setHideNav}/>
+        <UserNav hideNav={hideNav} setHideNav={setHideNav} handleMenu={handleMenu}/>
+        <UserTeams setHideNav={setHideNav} menu={menu}/>
+        <UserApplicants setHideNav={setHideNav} menu={menu}/>
       </main>
     </div>
   )
