@@ -11,6 +11,7 @@ function UserNav({ hideNav, setHideNav }) {
             <nav className="user__main-nav-container" onClick={handleChildClick}>
                 <div className="user__main-nav-container-logo"><img src={logo} alt="a logo of EMS" /></div>
                 <ul className="user__main-nav-container-list">
+                    <li className="user__main-nav-container-list-item"><span>My Profile</span></li>
                     <li className="user__main-nav-container-list-item"><span>Teams</span></li>
                     <li className="user__main-nav-container-list-item"><span>Applicants</span></li>
                 </ul>
