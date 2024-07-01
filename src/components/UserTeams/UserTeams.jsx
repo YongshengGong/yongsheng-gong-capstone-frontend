@@ -12,6 +12,10 @@ function UserTeams({ setHideNav }) {
     const [spreadPersonalInfo, setSpreadPersonalInfo] = useState({});
     const [save, setSave] = useState({});
 
+    // const [hasMounted, setHasMounted] = useState(false);
+
+
+
     useEffect(() => {
         const fetch = async () => {
             const allTeams = await axios.get(`${port}/teams`);
@@ -20,6 +24,7 @@ function UserTeams({ setHideNav }) {
             setMembers(allMembers.data);
         }
         fetch();
+        //   setHasMounted(true);
     }, []);
     if (!teams || !members) {
         return (<>loading...</>)
@@ -84,10 +89,11 @@ function UserTeams({ setHideNav }) {
                                         return (
                                             <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
                                                 <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isBossOrNot, member.isManagerOrNot, member.isTeamLeadOrNot)}>{member.member_name}</span>
-                                                <section className={spreadPersonalInfo[member.member_name] == true ?
-                                                    "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info" :
-                                                    "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info--hidden"
-                                                }>
+                                                <section
+                                                    className={`user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info ${spreadPersonalInfo[member.member_name] /*&& hasMounted*/ ?
+                                                            "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info--show" :
+                                                            "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info"
+                                                        }`}>
                                                     <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberName"><span>Name:</span><input type="text" value={save[member.id] ? save[member.id].member_name : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_name: e.target.value } })} /></span>
                                                     <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberTitle"><span>Title:</span><input type="text" value={save[member.id] ? save[member.id].member_title : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_title: e.target.value } })} /></span>
                                                     <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberEmail"><span>Email:</span><input type="text" value={save[member.id] ? save[member.id].member_email : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_email: e.target.value } })} /></span>
