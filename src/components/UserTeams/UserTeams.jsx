@@ -69,7 +69,7 @@ function UserTeams({ setHideNav }) {
     }
     return (
         <section className="user__main-teams" onClick={() => setSpreadPersonalInfo(false)}>
-            <h1 className="user__main-teams-title">Welcome {user.member_name}</h1>
+            <h1 className="user__main-teams-title">Welcome {members.find(member=>member.id==user.id).member_name}</h1>
             <nav className="user__main-teams-nav">
                 <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                 <Search
