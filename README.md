@@ -95,127 +95,104 @@ Employee Management System is a website that can help a company keep organized w
 
 ### Endpoints
 
-**GET /cafes**
-
-<!-- - Get cafés, with an optional "visited" if the user is logged in or not -->
+**GET /companies**
 
 Parameters:
-<!-- - longitude: User-provided location as a number -->
-<!-- - latitude: User-provided location as a number -->
-<!-- - token (optional): JWT used to add "visited" boolean -->
-
 
 Response:
-<!-- ```
+```
 [
     {
-        "id": 1,
-        "name": "Quantum Coffee",
-        "distance": 0.25,
-        "averageRating": 4.5,
-        "visited": true
+       "company_name": "Peter's company"
     },
     ...
 ]
-``` -->
+```
 
-**GET /cafes/:id**
-
-<!-- - Get café by id, with an optional "userRating" if the user is logged in or not -->
+**GET /teams**
 
 Parameters:
-<!-- - id: Café id as number -->
-<!-- - token (optional):  JWT used to add user rating -->
-
-Response:
-<!-- ```
-{
-    "id": 1,
-    "name": "Quantum Coffee",
-    "distance": 0.25,
-    "averageRating": 4.5,
-    "userRating": 5
-}
-``` -->
-
-**POST /cafes/:id/rating**
-
-<!-- - Logged in user can add their rating of a café -->
-
-Parameters:
-<!-- - id: Café id -->
-<!-- - token: JWT of the logged in user -->
-<!-- - rating: Number Rating out of 5 in 0.5 increments -->
-
-Response:
-<!-- ```
-{
-    "id": 1,
-    "name": "Quantum Coffee",
-    "distance": 0.25,
-    "averageRating": 4.5,
-    "userRating": 5
-}
-``` -->
-
-**PUT /cafes/:id/rating**
-
-<!-- - Logged in user can update their rating of a café -->
-
-Parameters:
-<!-- - id: Café id -->
-<!-- - token: JWT of the logged in user -->
-<!-- - rating: Number Rating out of 5 in 0.5 increments -->
-
-Response:
-<!-- ```
-{
-    "id": 1,
-    "name": "Quantum Coffee",
-    "distance": 0.25,
-    "averageRating": 4.5,
-    "userRating": 5
-}
-``` -->
-
-**POST /users/register**
-
-- Add a user account
-
-Parameters:
-
-- email: User's email
-- password: User's provided password
 
 Response:
 ```
 {
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
+    "company_id": "1",
+    "team_name": "Managers' Zone"
 }
+    ...
 ```
 
-**POST /users/login**
-
-- Login a user
+**GET /members**
 
 Parameters:
-- email: User's email
-- password: User's provided password
 
 Response:
 ```
 {
-    "token": "seyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I..."
+    "company_id": "1",
+    "team_id": "1",
+    "username": "peter123",
+    "password": "123456",
+    "member_name": "Peter",
+    "member_title": "manager",
+    "member_email": "peter@gmail.com",
+    "member_phone": "6135393902",
+    "member_address": "123 St."
 }
+    ...
 ```
 
-### Auth
+**POST /members**
+
+Parameters:
+
+Response:
+```
+{
+    "company_id": "1",
+    "team_id": "1",
+    "username": "peter",
+    "password": "123",
+    "member_name": "Peter",
+    "member_title": "junior developer",
+    "member_email": "peter@gmail.com",
+    "member_phone": "911",
+    "member_address": "123 St."
+}
+    ...
+```
+
+**PUT /members/:id**
+
+Parameters:
+- id: member id
+
+Response:
+Response:
+```
+{
+    "company_id": "1",
+    "team_id": "1",
+    "username": "peter",
+    "password": "123",
+    "member_name": "Peter",
+    "member_title": "junior developer",
+    "member_email": "peter@gmail.com",
+    "member_phone": "911",
+    "member_address": "123 St."
+}
+    ...
+```
+
+
+
+<!-- ### Auth
 
 - JWT auth
     - Before adding auth, all API requests will be using a fake user with id 1
     - Added after core features have first been implemented
     - Store JWT in localStorage, remove when a user logs out
-    - Add states for logged in showing different UI in places listed in mockups
+    - Add states for logged in showing different UI in places listed in mockups -->
 
 ## Roadmap
 
@@ -227,39 +204,43 @@ Response:
 
 - Create migrations
 
-- Gather 15 sample café geolocations in two different cities
+<!-- - Gather 15 sample café geolocations in two different cities -->
 
-- Create seeds with sample café data
+<!-- - Create seeds with sample café data -->
 
 - Deploy client and server projects so all commits will be reflected in production
 
-- Feature: List cafés from a given location
-    - Implement list cafés page including location form
-    - Store given location in sessionStorage
-    - Create GET /cafes endpoint
+- Feature: List all teams
+    - Create GET /teams endpoint
 
-- Feature: View café
-    - Implement view café page
-    - Create GET /cafes/:id 
+- Feature: List all members
+    - Create GET /members endpoint
 
-- Feature: Rate café
-    - Add form input to view café page
-    - Create POST /ratings
-    - States for add & update ratings 
+- Feature: Add a new team
+    - Create post /teams endpoint
+
+- Feature: Add a new member
+    - Create post /members endpoint
+
+- Feature: Edit member's info
+    - Create PUT /members
+
+- Feature: Switch team
+    - Create PUT /teams
 
 - Feature: Home page
 
 - Feature: Create account
     - Implement register page + form
-    - Create POST /users/register endpoint
+    - Create POST /members endpoint
 
 - Feature: Login
     - Implement login page + form
-    - Create POST /users/login endpoint
+    - Create POST /members endpoint
 
-- Feature: Implement JWT tokens
+<!-- - Feature: Implement JWT tokens
     - Server: Update expected requests / responses on protected endpoints
-    - Client: Store JWT in local storage, include JWT on axios calls
+    - Client: Store JWT in local storage, include JWT on axios calls -->
 
 - Bug fixes
 
@@ -267,7 +248,7 @@ Response:
 
 ## Nice-to-haves
 
-- Integrate Google Places / Maps
+<!-- - Integrate Google Places / Maps
     - View more details about a café
     - Visual radius functionality
 - Forgot password functionality
@@ -278,5 +259,5 @@ Response:
     - Ambiance
     - Staff
 - Expanded user information: full name, favorite café
-- Unit and Integration Tests
+- Unit and Integration Tests -->
 
