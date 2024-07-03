@@ -14,12 +14,10 @@ function ApplyPage() {
             username: "",
             password: uuidv4(),
             member_name: "",
-            member_title: "none",
+            member_title: "",
             member_email: "",
             member_phone: "",
             member_address: "",
-            isBossOrNot: false,
-            isManagerOrNot: false,
             isTeamLeadOrNot: false
         }
     )
@@ -28,7 +26,7 @@ function ApplyPage() {
     const res = await axios.get(`${port}/companies`);
     const searchedCompany=res.data.find(company=>company.company_name==companyName.company_name);
     const res1 = await axios.get(`${port}/teams`);
-    const filteredTeam=res1.data.find(team=>team.team_name=="Applicants' Zone" && team.company_id==searchedCompany.id);
+    const filteredTeam=res1.data.find(team=>team.team_name=="Applicants" && team.company_id==searchedCompany.id);
     await axios.post(`${port}/members`,{
         company_id:searchedCompany.id,
         team_id:filteredTeam.id,

@@ -25,11 +25,6 @@
             z-index: 2;
             left: 1rem;
             top: 1.6rem;
-
-            & svg {
-                height: 1rem;
-                width: 1rem;
-            }
         }
 
         &-search {
@@ -56,8 +51,8 @@
             height: 100%;
             border-radius: 4px;
             margin-bottom: 1rem;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
+            padding: 0.5rem 1rem 1rem 1rem;
+            border: 1px solid #5C667E;
 
             &:hover {
                 background-color: rgba(10, 9, 10, 0.1);
@@ -67,6 +62,11 @@
                 font-weight: bold;
                 display: block;
                 margin-bottom: 0.5rem;
+                @include flex(row, space-between, center);
+
+                &-delete {
+                    display: block;
+                }
             }
 
             &-teamMembers {
@@ -80,12 +80,18 @@
 
                     &:hover {
                         background-color: rgba(36, 33, 36, 0.304);
+                        border-radius: 5px;
                     }
 
 
                     &-title {
-                        display: block;
-                        width: 100%;
+                        transition: font-size 1s;
+
+                        &--triggered {
+                            font-weight: bold;
+                            font-size: 30px;
+                            border-bottom: 3px solid black;
+                        }
                     }
 
 
@@ -95,13 +101,14 @@
                         overflow: hidden;
                         display: flex;
                         flex-direction: column;
-
+                        margin-top: 0.5rem;
 
                         &>* {
                             width: 100%;
                             height: 100%;
                             display: block;
                             margin-bottom: 0.2rem;
+                            font-weight: bold;
                             @include flex(row, space-between, center);
 
                             @media (max-width:200px) {
@@ -111,16 +118,109 @@
 
                             &>* {
                                 display: block;
+                                height: 30px;
                                 width: 50%;
+                                border-radius: 5px;
+                                border: none;
+                            }
+
+                            &>span {
+                                position: relative;
+                                top: 5px;
+                            }
+
+                            &>input {
+                                padding-left: 0.5rem;
                             }
                         }
 
                         &--show {
-                            height: 250px;
+                            height: 330px;
+                        }
 
-
+                        &-button {
+                            display: block;
+                            width: 100%;
+                            background-color: #0095FF;
+                            border: none;
+                            color: #FFFFFF;
+                            text-align: center;
+                            padding: 0.3rem 0.25rem;
+                            border-radius: 5px;
+                            font-family: "titillium";
+                            font-size: 15px;
+                            margin-bottom: 0.5rem;
+                            margin-top: 0.5rem;
                         }
                     }
+                }
+            }
+        }
+
+        &-addNewTeam {
+            width: 100%;
+            padding: 0rem 1rem 1rem 1rem;
+            border: 1px solid #5C667E;
+            border-radius: 5px;
+            @include flex(column, center, center);
+
+            &-icon {
+                font-size: 30px;
+                margin-bottom: 1rem;
+                transition: font-size 1s;
+
+                &--hide {
+                    font-size: 0;
+                }
+            }
+
+            &-input {
+                width: 100%;
+                height: 150px;
+                transition: height 1s;
+                @include flex(column, space-between, center);
+
+                &>* {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 5px;
+                    border: none;
+                }
+
+                &>span {
+                    top: 5px;
+                    font-weight: bold;
+                    @include flex(row, space-between, center);
+
+                    &>img {
+                        display: block;
+                        height: 20px;
+                    }
+                }
+
+                &>input {
+                    padding-left: 0.5rem;
+                }
+
+                &--hide {
+                    height: 0px;
+                    overflow: hidden;
+                }
+
+                &-button {
+                    padding: 0.3rem 0.25rem;
+                    display: block;
+                    width: 100%;
+                    background-color: #0095FF;
+                    border: none;
+                    color: #FFFFFF;
+                    text-align: center;
+                    border-radius: 5px;
+                    font-family: "titillium";
+                    font-size: 15px;
+                    margin-bottom: 0.5rem;
+                    margin-top: 0.5rem;
                 }
             }
         }

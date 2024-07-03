@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState} from "react";
 import axios from "axios";
 
+
 function RegisterPage() {
     const nav = useNavigate();
     const port = import.meta.env.VITE_PORT;
@@ -13,12 +14,10 @@ function RegisterPage() {
             username: "",
             password: "",
             member_name: "",
-            member_title: "none",
-            member_email: "none",
-            member_phone: "none",
-            member_address: "none",
-            isBossOrNot: true,
-            isManagerOrNot: false,
+            member_title: "Boss",
+            member_email: "",
+            member_phone: "",
+            member_address: "",
             isTeamLeadOrNot: false
         }
     )
@@ -29,18 +28,22 @@ function RegisterPage() {
     const newlyAddedCompany=res1.data[res1.data.length-1];
     await axios.post(`${port}/teams`,{
         company_id:newlyAddedCompany.id,
-        team_name:"Boss Zone"
+        team_name:"Boss (Default)"
     });
     await axios.post(`${port}/teams`,{
         company_id:newlyAddedCompany.id,
-        team_name:"Managers' Zone"
+        team_name:"Managers (Default)"
     });
     await axios.post(`${port}/teams`,{
         company_id:newlyAddedCompany.id,
-        team_name:"Applicants' Zone"
+        team_name:"Pending (Default)"
+    });
+    await axios.post(`${port}/teams`,{
+        company_id:newlyAddedCompany.id,
+        team_name:"Applicants"
     });
     const res2 = await axios.get(`${port}/teams`);
-    const newlyAddedTeam=res2.data[res2.data.length-3];
+    const newlyAddedTeam=res2.data[res2.data.length-4];
     await axios.post(`${port}/members`,{
         company_id:newlyAddedTeam.company_id,
         team_id:newlyAddedTeam.id,
