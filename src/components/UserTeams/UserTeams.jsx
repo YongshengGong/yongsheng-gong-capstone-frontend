@@ -9,7 +9,7 @@ import DeleteTeam from "../DeleteTeam/DeleteTeam";
 
 function UserTeams({ setHideNav, menu }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    const port = import.meta.env.VITE_API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
     const [teams, setTeams] = useState(null);
     const [members, setMembers] = useState(null);
     const [newTeam, setNewTeam] = useState({ company_id: user.company_id, team_name: "" });
@@ -22,9 +22,9 @@ function UserTeams({ setHideNav, menu }) {
 
     useEffect(() => {
         const fetch = async () => {
-            const allTeams = await axios.get(`${port}/teams`);
+            const allTeams = await axios.get(`${API_URL}/teams`);
             setTeams(allTeams.data);
-            const allMembers = await axios.get(`${port}/members`);
+            const allMembers = await axios.get(`${API_URL}/members`);
             setMembers(allMembers.data);
         }
         fetch();
@@ -58,10 +58,10 @@ function UserTeams({ setHideNav, menu }) {
     const handleSave = (e, editedObject, id) => {
         e.preventDefault();
         const fetch = async () => {
-            const res = await axios.put(`${port}/members/${id}`, editedObject);
-            const allTeams = await axios.get(`${port}/teams`);
+            const res = await axios.put(`${API_URL}/members/${id}`, editedObject);
+            const allTeams = await axios.get(`${API_URL}/teams`);
             setTeams(allTeams.data);
-            const allMembers = await axios.get(`${port}/members`);
+            const allMembers = await axios.get(`${API_URL}/members`);
             setMembers(allMembers.data);
         }
         fetch();
@@ -72,8 +72,8 @@ function UserTeams({ setHideNav, menu }) {
             setError(true);
         }
         else {
-            await axios.post(`${port}/teams`, newTeam);
-            const allTeams = await axios.get(`${port}/teams`);
+            await axios.post(`${API_URL}/teams`, newTeam);
+            const allTeams = await axios.get(`${API_URL}/teams`);
             setTeams(allTeams.data);
             setNewTeam({ company_id: user.company_id, team_name: "" });
             setAddNewTeamButton(false);
@@ -86,20 +86,20 @@ function UserTeams({ setHideNav, menu }) {
             if (checkIfThereAreMembersInDeletingTeam.length !== 0) {
                 for (const member of checkIfThereAreMembersInDeletingTeam) {
                     let { created_at, ...newObj } = member;
-                    const res = await axios.put(`${port}/members/${newObj.id}`, { ...newObj, team_id: teams.find(team => team.company_id == user.company_id && team.team_name == "Pending (Default)").id });
-                    await axios.delete(`${port}/teams/${teamID}`);
-                    const allTeams = await axios.get(`${port}/teams`);
+                    const res = await axios.put(`${API_URL}/members/${newObj.id}`, { ...newObj, team_id: teams.find(team => team.company_id == user.company_id && team.team_name == "Pending (Default)").id });
+                    await axios.delete(`${API_URL}/teams/${teamID}`);
+                    const allTeams = await axios.get(`${API_URL}/teams`);
                     setTeams(allTeams.data);
-                    const allMembers = await axios.get(`${port}/members`);
+                    const allMembers = await axios.get(`${API_URL}/members`);
                     setMembers(allMembers.data);
                     setPopup(false);
                 }
             }
             else {
-                await axios.delete(`${port}/teams/${teamID}`);
-                const allTeams = await axios.get(`${port}/teams`);
+                await axios.delete(`${API_URL}/teams/${teamID}`);
+                const allTeams = await axios.get(`${API_URL}/teams`);
                 setTeams(allTeams.data);
-                const allMembers = await axios.get(`${port}/members`);
+                const allMembers = await axios.get(`${API_URL}/members`);
                 setMembers(allMembers.data);
                 setPopup(false);
             }

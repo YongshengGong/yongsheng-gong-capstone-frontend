@@ -8,12 +8,12 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ApplyPage from "./pages/ApplyPage/ApplyPage";
 
 function App() {
-  const port = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL;
   const [memberInfo,setMemberInfo]=useState({})
   const handleLogin = async (e, login, navFunction) => {
     e.preventDefault();
     try{
-    const res = await axios.post(`${port}/members/login`, login);
+    const res = await axios.post(`${API_URL}/members/login`, login);
     if(res.data){
       setMemberInfo(res.data);
       sessionStorage.setItem('user', JSON.stringify(res.data));

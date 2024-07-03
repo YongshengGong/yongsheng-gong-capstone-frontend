@@ -7,7 +7,7 @@ import axios from "axios";
 
 function Login({ popup, setPopup, handleLogin }) {
     const nav = useNavigate();
-    const port = import.meta.env.VITE_API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
     const [login, setLogin] = useState(
         {
             username: "",

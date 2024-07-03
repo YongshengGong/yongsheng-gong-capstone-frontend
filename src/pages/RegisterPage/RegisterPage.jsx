@@ -7,7 +7,7 @@ import axios from "axios";
 
 function RegisterPage() {
     const nav = useNavigate();
-    const port = import.meta.env.VITE_API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
     const [companyName,setCompanyName]=useState({company_name:""});
     const [register, setRegister] = useState(
         {
@@ -23,28 +23,28 @@ function RegisterPage() {
     )
     const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`${port}/companies`,companyName);
-    const res1 = await axios.get(`${port}/companies`);
+    await axios.post(`${API_URL}/companies`,companyName);
+    const res1 = await axios.get(`${API_URL}/companies`);
     const newlyAddedCompany=res1.data[res1.data.length-1];
-    await axios.post(`${port}/teams`,{
+    await axios.post(`${API_URL}/teams`,{
         company_id:newlyAddedCompany.id,
         team_name:"Boss (Default)"
     });
-    await axios.post(`${port}/teams`,{
+    await axios.post(`${API_URL}/teams`,{
         company_id:newlyAddedCompany.id,
         team_name:"Managers (Default)"
     });
-    await axios.post(`${port}/teams`,{
+    await axios.post(`${API_URL}/teams`,{
         company_id:newlyAddedCompany.id,
         team_name:"Pending (Default)"
     });
-    await axios.post(`${port}/teams`,{
+    await axios.post(`${API_URL}/teams`,{
         company_id:newlyAddedCompany.id,
         team_name:"Applicants"
     });
-    const res2 = await axios.get(`${port}/teams`);
+    const res2 = await axios.get(`${API_URL}/teams`);
     const newlyAddedTeam=res2.data[res2.data.length-4];
-    await axios.post(`${port}/members`,{
+    await axios.post(`${API_URL}/members`,{
         company_id:newlyAddedTeam.company_id,
         team_id:newlyAddedTeam.id,
         ...register

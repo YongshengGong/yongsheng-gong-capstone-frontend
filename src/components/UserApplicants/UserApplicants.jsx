@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 function UserApplicants({ setHideNav, menu }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    const port = import.meta.env.VITE_API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
     const [teams, setTeams] = useState(null);
     const [members, setMembers] = useState(null);
     const [companies, setCompanies] = useState(null);
@@ -16,11 +16,11 @@ function UserApplicants({ setHideNav, menu }) {
 
     useEffect(() => {
         const fetch = async () => {
-            const allTeams = await axios.get(`${port}/teams`);
+            const allTeams = await axios.get(`${API_URL}/teams`);
             setTeams(allTeams.data);
-            const allMembers = await axios.get(`${port}/members`);
+            const allMembers = await axios.get(`${API_URL}/members`);
             setMembers(allMembers.data);
-            const allCompanies = await axios.get(`${port}/companies`);
+            const allCompanies = await axios.get(`${API_URL}/companies`);
             setCompanies(allCompanies.data);
         }
         fetch();
@@ -64,10 +64,10 @@ function UserApplicants({ setHideNav, menu }) {
     const handleSave = (e, editedObject, id) => {
         e.preventDefault();
         const fetch = async () => {
-            const res = await axios.put(`${port}/members/${id}`, editedObject);
-            const allTeams = await axios.get(`${port}/teams`);
+            const res = await axios.put(`${API_URL}/members/${id}`, editedObject);
+            const allTeams = await axios.get(`${API_URL}/teams`);
             setTeams(allTeams.data);
-            const allMembers = await axios.get(`${port}/members`);
+            const allMembers = await axios.get(`${API_URL}/members`);
             setMembers(allMembers.data);
         }
         fetch();

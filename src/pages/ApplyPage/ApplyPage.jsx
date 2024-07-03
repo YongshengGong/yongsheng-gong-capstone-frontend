@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function ApplyPage() {
     const nav = useNavigate();
-    const port = import.meta.env.VITE_API_URL;
+    const API_URL = import.meta.env.VITE_API_URL;
     const [companyName,setCompanyName]=useState({company_name:""});
     const [applicant, setApplicant] = useState(
         {
@@ -23,11 +23,11 @@ function ApplyPage() {
     )
     const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.get(`${port}/companies`);
+    const res = await axios.get(`${API_URL}/companies`);
     const searchedCompany=res.data.find(company=>company.company_name==companyName.company_name);
-    const res1 = await axios.get(`${port}/teams`);
+    const res1 = await axios.get(`${API_URL}/teams`);
     const filteredTeam=res1.data.find(team=>team.team_name=="Applicants" && team.company_id==searchedCompany.id);
-    await axios.post(`${port}/members`,{
+    await axios.post(`${API_URL}/members`,{
         company_id:searchedCompany.id,
         team_id:filteredTeam.id,
         ...applicant
