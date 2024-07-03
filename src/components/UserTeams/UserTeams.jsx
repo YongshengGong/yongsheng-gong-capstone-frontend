@@ -57,6 +57,7 @@ function UserTeams({ setHideNav, menu }) {
     }
     const handleSave = (e, editedObject, id) => {
         e.preventDefault();
+        setSpreadPersonalInfo({ ...spreadPersonalInfo, [id]: false });
         const fetch = async () => {
             const res = await axios.put(`${API_URL}/members/${id}`, editedObject);
             const allTeams = await axios.get(`${API_URL}/teams`);
@@ -68,7 +69,7 @@ function UserTeams({ setHideNav, menu }) {
     }
     const handleAddNewTeam = async (e) => {
         e.preventDefault();
-        if (teams.find(team => team.team_name == newTeam.team_name)) {
+        if (teams.filter(team=>team.company_id==user.company_id).find(team => team.team_name == newTeam.team_name)) {
             setError(true);
         }
         else {
@@ -137,7 +138,7 @@ function UserTeams({ setHideNav, menu }) {
                                                     "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" :
                                                     "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title--triggered"
                                                 } onClick={() => handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot)}>
-                                                    {member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}
+                                                    <span>{member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}</span>
                                                 </span>
                                                 <section
                                                     className={`user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info ${spreadPersonalInfo[member.id] ?
@@ -190,7 +191,7 @@ function UserTeams({ setHideNav, menu }) {
                     </div>
                 </form>
             </section>
-            <DeleteTeam popup={popup} setPopup={setPopup} deleteTeamID={deleteTeamID} handleDeleteTeam={handleDeleteTeam} />
+            <DeleteTeam popup={popup} setPopup={setPopup} deleteTeamID={deleteTeamID} handleDeleteTeam={handleDeleteTeam} teams={teams} />
         </section>
     )
 }
