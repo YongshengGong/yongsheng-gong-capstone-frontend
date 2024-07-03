@@ -9,7 +9,7 @@ import DeleteTeam from "../DeleteTeam/DeleteTeam";
 
 function UserTeams({ setHideNav, menu }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    const port = import.meta.env.VITE_PORT;
+    const port = import.meta.env.VITE_API_URL;
     const [teams, setTeams] = useState(null);
     const [members, setMembers] = useState(null);
     const [newTeam, setNewTeam] = useState({ company_id: user.company_id, team_name: "" });

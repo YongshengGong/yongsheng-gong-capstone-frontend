@@ -8,7 +8,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ApplyPage from "./pages/ApplyPage/ApplyPage";
 
 function App() {
-  const port = import.meta.env.VITE_PORT;
+  const port = import.meta.env.VITE_API_URL;
   const [memberInfo,setMemberInfo]=useState({})
   const handleLogin = async (e, login, navFunction) => {
     e.preventDefault();

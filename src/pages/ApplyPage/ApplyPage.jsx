@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 function ApplyPage() {
     const nav = useNavigate();
-    const port = import.meta.env.VITE_PORT;
+    const port = import.meta.env.VITE_API_URL;
     const [companyName,setCompanyName]=useState({company_name:""});
     const [applicant, setApplicant] = useState(
         {

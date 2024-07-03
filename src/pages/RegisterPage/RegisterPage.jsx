@@ -7,7 +7,7 @@ import axios from "axios";
 
 function RegisterPage() {
     const nav = useNavigate();
-    const port = import.meta.env.VITE_PORT;
+    const port = import.meta.env.VITE_API_URL;
     const [companyName,setCompanyName]=useState({company_name:""});
     const [register, setRegister] = useState(
         {

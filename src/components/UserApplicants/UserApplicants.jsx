@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 function UserApplicants({ setHideNav, menu }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    const port = import.meta.env.VITE_PORT;
+    const port = import.meta.env.VITE_API_URL;
     const [teams, setTeams] = useState(null);
     const [members, setMembers] = useState(null);
     const [companies, setCompanies] = useState(null);
