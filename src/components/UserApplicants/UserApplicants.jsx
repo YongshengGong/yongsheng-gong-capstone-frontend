@@ -33,7 +33,7 @@ function UserApplicants({ setHideNav, menu }) {
     const handleChildClick = (event) => {
         event.stopPropagation();
     };
-    const handleEdit = (member_name, member_id, company_id, team_id, username, password, title, email, phone, address, isBossOrNot, isManagerOrNot, isTeamLeadOrNot, company_name) => {
+    const handleEdit = (member_name, member_id, company_id, team_id, username, password, title, email, phone, address, isTeamLeadOrNot, company_name) => {
         setSpreadPersonalInfo({ ...spreadPersonalInfo, [member_id]: true });
         setSave({
             ...save,
@@ -47,8 +47,6 @@ function UserApplicants({ setHideNav, menu }) {
                 member_email: email,
                 member_phone: phone,
                 member_address: address,
-                isBossOrNot: isBossOrNot,
-                isManagerOrNot: isManagerOrNot,
                 isTeamLeadOrNot: isTeamLeadOrNot
             }
         });
@@ -90,7 +88,7 @@ function UserApplicants({ setHideNav, menu }) {
 
             <section className="user__main-applicants-displayTeams">
                 {
-                    teams.filter(team => team.team_name == "Applicants' Zone" && team.company_id == user.company_id).map(team => {
+                    teams.filter(team => team.team_name == "Applicants" && team.company_id == user.company_id).map(team => {
                         return (<article className="user__main-applicants-displayTeams-singleTeam" key={team.id}>
                             <span className="user__main-applicants-displayTeams-singleTeam-teamName">{team.team_name}</span>
                             <section className="user__main-applicants-displayTeams-singleTeam-teamMembers">
@@ -98,7 +96,7 @@ function UserApplicants({ setHideNav, menu }) {
                                     members.filter(member => member.team_id == team.id).map((member) => {
                                         return (
                                             <form className="user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
-                                                <span className="user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isBossOrNot, member.isManagerOrNot, member.isTeamLeadOrNot, companies.find(company => company.id == member.company_id).company_name)}>{member.member_name}</span>
+                                                <span className="user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot, companies.find(company => company.id == member.company_id).company_name)}>{member.member_name}</span>
                                                 <section
                                                     className={`user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-info ${spreadPersonalInfo[member.id] ?
                                                         "user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-info--show" :
@@ -115,7 +113,7 @@ function UserApplicants({ setHideNav, menu }) {
                                                         <span>Team:</span>
                                                         <select onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], team_id: (teams.find(team => team.team_name == e.target.value && team.company_id == user.company_id).id) } })}>
                                                             <option hidden>must fill</option>
-                                                            {teams.filter(team => team.company_id == user.company_id && team.team_name != "Applicants' Zone").map(team => { return (<option key={team.id} >{team.team_name}</option>) })}
+                                                            {teams.filter(team => team.company_id == user.company_id && team.team_name != "Applicants").map(team => { return (<option key={team.id} >{team.team_name}</option>) })}
                                                         </select>
                                                     </span>
                                                     <button type="submit" className="user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-info-button">Approve</button>
