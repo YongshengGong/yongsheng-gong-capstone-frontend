@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import trash from "../../assets/icons/trash.svg";
 import close from "../../assets/icons/close.svg";
+import DeleteTeam from "../DeleteTeam/DeleteTeam";
 
 function UserTeams({ setHideNav, menu }) {
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -15,6 +16,9 @@ function UserTeams({ setHideNav, menu }) {
     const [addNewTeamButton, setAddNewTeamButton] = useState(false);
     const [spreadPersonalInfo, setSpreadPersonalInfo] = useState({});
     const [save, setSave] = useState({});
+    const [popup, setPopup] = useState(false);
+    const [deleteTeamID, setDeleteTeamID] = useState('');
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -64,12 +68,45 @@ function UserTeams({ setHideNav, menu }) {
     }
     const handleAddNewTeam = async (e) => {
         e.preventDefault();
-        await axios.post(`${port}/teams`, newTeam);
-        const allTeams = await axios.get(`${port}/teams`);
-        setTeams(allTeams.data);
-        setNewTeam({ company_id: user.company_id, team_name: "" });
-        setAddNewTeamButton(false);
+        if (teams.find(team => team.team_name == newTeam.team_name)) {
+            setError(true);
+        }
+        else {
+            await axios.post(`${port}/teams`, newTeam);
+            const allTeams = await axios.get(`${port}/teams`);
+            setTeams(allTeams.data);
+            setNewTeam({ company_id: user.company_id, team_name: "" });
+            setAddNewTeamButton(false);
+            setError(false);
+        }
     }
+    const handleDeleteTeam = (teamID) => {
+        const fetch = async () => {
+            let checkIfThereAreMembersInDeletingTeam = members.filter(member => member.team_id == teamID);
+            if (checkIfThereAreMembersInDeletingTeam.length !== 0) {
+                for (const member of checkIfThereAreMembersInDeletingTeam) {
+                    let { created_at, ...newObj } = member;
+                    const res = await axios.put(`${port}/members/${newObj.id}`, { ...newObj, team_id: teams.find(team => team.company_id == user.company_id && team.team_name == "Pending (Default)").id });
+                    await axios.delete(`${port}/teams/${teamID}`);
+                    const allTeams = await axios.get(`${port}/teams`);
+                    setTeams(allTeams.data);
+                    const allMembers = await axios.get(`${port}/members`);
+                    setMembers(allMembers.data);
+                    setPopup(false);
+                }
+            }
+            else {
+                await axios.delete(`${port}/teams/${teamID}`);
+                const allTeams = await axios.get(`${port}/teams`);
+                setTeams(allTeams.data);
+                const allMembers = await axios.get(`${port}/members`);
+                setMembers(allMembers.data);
+                setPopup(false);
+            }
+        }
+        fetch();
+    }
+
     return (
         <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
             <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
@@ -86,7 +123,10 @@ function UserTeams({ setHideNav, menu }) {
                     teams.filter(team => team.team_name != "Applicants" && team.company_id == user.company_id).map(team => {
                         return (<article className="user__main-teams-displayTeams-singleTeam" key={team.id}>
                             <div className="user__main-teams-displayTeams-singleTeam-teamName">{team.team_name}
-                                <img src={trash} alt="a logo of trash can" className="user__main-teams-displayTeams-singleTeam-teamName-delete" />
+                                {["Boss (Default)", "Managers (Default)", "Pending (Default)", "Applicants"].includes(team.team_name) ?
+                                    null :
+                                    <img src={trash} alt="a logo of trash can" className="user__main-teams-displayTeams-singleTeam-teamName-delete" onClick={() => { setDeleteTeamID(team.id); setPopup(true) }} />
+                                }
                             </div>
                             <section className="user__main-teams-displayTeams-singleTeam-teamMembers">
                                 {
@@ -143,12 +183,14 @@ function UserTeams({ setHideNav, menu }) {
                             "user__main-teams-displayTeams-addNewTeam-input user__main-teams-displayTeams-addNewTeam-input--hide"
                         }
                     >
-                        <span>New team name:  <img src={close} alt="a logo of closing a window" onClick={() => setAddNewTeamButton(false)} /></span>
+                        <span>New team name:  <img src={close} alt="a logo of closing a window" onClick={() => { setAddNewTeamButton(false); setError(false); setNewTeam({ ...newTeam, team_name: "" }) }} /></span>
                         <input type="text" value={newTeam.team_name} onChange={(e) => { setNewTeam({ ...newTeam, team_name: e.target.value }) }} />
+                        <span className={error == false ? "user__main-teams-displayTeams-addNewTeam-input-error" : "user__main-teams-displayTeams-addNewTeam-input-error user__main-teams-displayTeams-addNewTeam-input-error--error"}>This team name already exists!</span>
                         <button type="submit" className="user__main-teams-displayTeams-addNewTeam-input-button">Add a new team</button>
                     </div>
                 </form>
             </section>
+            <DeleteTeam popup={popup} setPopup={setPopup} deleteTeamID={deleteTeamID} handleDeleteTeam={handleDeleteTeam} />
         </section>
     )
 }
