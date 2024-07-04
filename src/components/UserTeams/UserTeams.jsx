@@ -1,6 +1,6 @@
 import "./UserTeams.scss"
-import { MenuOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
+import { MenuOutlined, PlusCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Input, Alert, notification } from 'antd';
 import axios from "axios";
 import { useState, useEffect } from "react";
 import trash from "../../assets/icons/trash.svg";
@@ -19,6 +19,19 @@ function UserTeams({ setHideNav, menu }) {
     const [popup, setPopup] = useState(false);
     const [deleteTeamID, setDeleteTeamID] = useState('');
     const [error, setError] = useState(false);
+    const [selectedTeamName, setSelectedTeamName] = useState("");
+
+    const [api, contextHolder] = notification.useNotification();
+    const openNotification = () => {
+        console.log("test")
+        api.info({
+            message: "Error",
+            description: <Alert message="There has to be at least 2 people in this team before you can swap out" type="error" />,
+            placement: "bottomRight",
+            duration: 4,
+            icon: <InfoCircleOutlined style={{ color: 'red' }} />
+        });
+    };
 
     useEffect(() => {
         const fetch = async () => {
@@ -57,19 +70,26 @@ function UserTeams({ setHideNav, menu }) {
     }
     const handleSave = (e, editedObject, id) => {
         e.preventDefault();
-        setSpreadPersonalInfo({ ...spreadPersonalInfo, [id]: false });
-        const fetch = async () => {
-            const res = await axios.put(`${API_URL}/members/${id}`, editedObject);
-            const allTeams = await axios.get(`${API_URL}/teams`);
-            setTeams(allTeams.data);
-            const allMembers = await axios.get(`${API_URL}/members`);
-            setMembers(allMembers.data);
+        let teamID = members.find(member => member.id == id).team_id;
+        if (teams.find(team => team.id == teamID).team_name == "Boss (Default)" && members.filter(member => member.team_id == teamID).length == 1 && selectedTeamName != "Boss (Default)" && selectedTeamName != "") {
+            openNotification();
+            console.log("workng");
         }
-        fetch();
+        else {
+            setSpreadPersonalInfo({ ...spreadPersonalInfo, [id]: false });
+            const fetch = async () => {
+                const res = await axios.put(`${API_URL}/members/${id}`, editedObject);
+                const allTeams = await axios.get(`${API_URL}/teams`);
+                setTeams(allTeams.data);
+                const allMembers = await axios.get(`${API_URL}/members`);
+                setMembers(allMembers.data);
+            }
+            fetch();
+        }
     }
     const handleAddNewTeam = async (e) => {
         e.preventDefault();
-        if (teams.filter(team=>team.company_id==user.company_id).find(team => team.team_name == newTeam.team_name)) {
+        if (teams.filter(team => team.company_id == user.company_id).find(team => team.team_name == newTeam.team_name)) {
             setError(true);
         }
         else {
@@ -110,6 +130,7 @@ function UserTeams({ setHideNav, menu }) {
 
     return (
         <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
+            {contextHolder}
             <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
             <nav className="user__main-teams-nav">
                 <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
@@ -154,7 +175,7 @@ function UserTeams({ setHideNav, menu }) {
                                                     <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>Password:</span><input type="text" value={save[member.id] ? save[member.id].password : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
                                                     <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberTeam">
                                                         <span>Team:</span>
-                                                        <select onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], team_id: (teams.find(team => team.team_name == e.target.value && team.company_id == user.company_id).id) } })}>
+                                                        <select onChange={(e) => { setSave({ ...save, [member.id]: { ...save[member.id], team_id: (teams.find(team => team.team_name == e.target.value && team.company_id == user.company_id).id) } }); setSelectedTeamName(e.target.value) }}>
                                                             <option hidden>Switch team</option>
                                                             {teams.filter(team => team.company_id == user.company_id && team.team_name != "Applicants").map(team => { return (<option key={team.id} >{team.team_name}</option>) })}
                                                         </select>
