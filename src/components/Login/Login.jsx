@@ -25,7 +25,7 @@ function Login({ popup, setPopup, handleLogin }) {
                 <h1 className="login__container-title">Welcome to EMS</h1>
                 <form className="login__container-form" onSubmit={e => handleLogin(e, login, navFunction)}>
                     <input className="login__container-form-input" type="text" placeholder="username" onChange={e => setLogin({ ...login, username: e.target.value })} value={login.username} />
-                    <input className="login__container-form-input" type="text" placeholder="password" onChange={e => setLogin({ ...login, password: e.target.value })} value={login.password} />
+                    <input className="login__container-form-input" type="password" placeholder="password" onChange={e => setLogin({ ...login, password: e.target.value })} value={login.password} />
                     <section className="login__container-form-buttons">
                         <button className="login__container-form-buttons--1" type="submit">Log In</button>
                         <button className="login__container-form-buttons--2" onClick={() => nav("/Register")}>Register as a company</button>
