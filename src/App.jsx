@@ -1,3 +1,5 @@
+import { MenuOutlined, PlusCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Input, Alert, notification } from 'antd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState} from 'react';
 import axios from "axios";
@@ -8,19 +10,28 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ApplyPage from "./pages/ApplyPage/ApplyPage";
 
 function App() {
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = () => {
+      api.info({
+          message: "Error",
+          description: <Alert message="Invalid username or password" type="error" />,
+          placement: "bottomRight",
+          duration: 4,
+          icon: <InfoCircleOutlined style={{ color: 'red' }} />
+      });
+  };
   const API_URL = import.meta.env.VITE_API_URL;
-  const [memberInfo,setMemberInfo]=useState({})
   const handleLogin = async (e, login, navFunction) => {
     e.preventDefault();
     try{
     const res = await axios.post(`${API_URL}/members/login`, login);
     if(res.data){
-      setMemberInfo(res.data);
       sessionStorage.setItem('user', JSON.stringify(res.data));
       navFunction(res.data.id);
     }
     }
     catch(e){
+      openNotification();
       console.log(e)
     }
   }
@@ -33,6 +44,7 @@ function App() {
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
       </Routes>
+      {contextHolder}
     </BrowserRouter>
   )
 }
