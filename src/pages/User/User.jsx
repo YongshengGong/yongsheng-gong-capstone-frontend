@@ -15,7 +15,7 @@ function User() {
   return (
     <div className="user">
       <main className="user__main">
-        <UserNav hideNav={hideNav} setHideNav={setHideNav} handleMenu={handleMenu}/>
+        <UserNav hideNav={hideNav} setHideNav={setHideNav} handleMenu={handleMenu} menu={menu}/>
         <UserTeams setHideNav={setHideNav} menu={menu}/>
         <UserApplicants setHideNav={setHideNav} menu={menu}/>
       </main>
