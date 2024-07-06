@@ -2,9 +2,10 @@ import "./UserNav.scss"
 import React, { useState, useEffect } from 'react';
 import logo from "../../assets/logo.svg";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 function UserNav({ hideNav, setHideNav, handleMenu, menu }) {
-    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+    const [user, setUser] = useState(jwtDecode(sessionStorage.getItem("token")));
     const [dummy, setDummy] = useState(false);
     const API_URL = import.meta.env.VITE_API_URL;
     const [teams, setTeams] = useState(null);
