@@ -48,10 +48,7 @@ function UserTeams({ setHideNav, menu }) {
             setTeams(allTeams.data);
             const allMembers = await axios.get(`${API_URL}/members`);
             setMembers(allMembers.data);
-            const res = await axios.post(`${API_URL}/members/login`, {
-                username: user.username,
-                password: user.password,
-            });
+            const res = await axios.get(`${API_URL}/members/${user.id}`);
             setUser(res.data);
         }
         fetch();

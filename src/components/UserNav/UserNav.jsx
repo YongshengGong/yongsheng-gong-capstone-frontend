@@ -15,10 +15,7 @@ function UserNav({ hideNav, setHideNav, handleMenu, menu }) {
         const fetch = async () => {
             const allTeams = await axios.get(`${API_URL}/teams`);
             setTeams(allTeams.data);
-            const res = await axios.post(`${API_URL}/members/login`, {
-                username: user.username,
-                password: user.password,
-            });
+            const res = await axios.get(`${API_URL}/members/${user.id}`);
             setUser(res.data);
         }
         fetch();
