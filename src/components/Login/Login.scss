@@ -73,6 +73,17 @@
                 }
             }
 
+            &-password {
+                @include flex(row, flex-end, center);
+
+                & img {
+                    position: absolute;
+                    margin-bottom: 15px;
+                    margin-right: 15px;
+
+                }
+            }
+
             &-buttons {
                 width: 100%;
                 @include flex(column, space-around, flex-end);
@@ -84,6 +95,15 @@
                     font-family: "titillium";
                     font-size: 15px;
                     border: none;
+
+                    &:hover {
+                        cursor: url("../../assets/icons/click.svg"), auto;
+                        font-size: 20px;
+                    }
+
+                    &:active {
+                        transform: translateY(5px);
+                    }
                 }
 
                 &--1 {
@@ -104,6 +124,7 @@
 
                     &:hover {
                         border: 2px solid #0095FF;
+                        font-size: 17px !important;
                     }
                 }
             }
@@ -115,8 +136,13 @@
             left: 30vw;
 
             @include tablet {
-                left: 300px;
-                top: 0;
+                left: 290px;
+                top: 10px;
+            }
+
+            &:hover {
+                cursor: url("../../assets/icons/click.svg"), auto;
+                background-color: #0095FF;
             }
         }
     }
