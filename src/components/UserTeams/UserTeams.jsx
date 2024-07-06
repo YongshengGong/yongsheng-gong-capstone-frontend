@@ -1,4 +1,5 @@
 import "./UserTeams.scss"
+import {jwtDecode} from "jwt-decode";
 import { MenuOutlined, PlusCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Input, Alert, notification } from 'antd';
 import axios from "axios";
@@ -8,7 +9,7 @@ import close from "../../assets/icons/close.svg";
 import DeleteTeam from "../DeleteTeam/DeleteTeam";
 
 function UserTeams({ setHideNav, menu }) {
-    const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")));
+    const [user, setUser] = useState(jwtDecode(sessionStorage.getItem("token")));
     const API_URL = import.meta.env.VITE_API_URL;
     const [teams, setTeams] = useState(null);
     const [members, setMembers] = useState(null);
@@ -171,7 +172,7 @@ function UserTeams({ setHideNav, menu }) {
                                                     <span className={!spreadPersonalInfo[member.id] ?
                                                         "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" :
                                                         "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title--triggered"
-                                                    } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
+                                                    } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, "", member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
                                                         <span>{member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}</span>
                                                     </span>
                                                     <section
@@ -185,7 +186,7 @@ function UserTeams({ setHideNav, menu }) {
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPhone"><span>Phone:</span><input type="text" value={save[member.id] ? save[member.id].member_phone : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_phone: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberAddress"><span>Address:</span><input type="text" value={save[member.id] ? save[member.id].member_address : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_address: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberUsername"><span>Username:</span><input type="text" value={save[member.id] ? save[member.id].username : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], username: e.target.value } })} /></span>
-                                                        <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>Password:</span><input type="text" value={save[member.id] ? save[member.id].password : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
+                                                        <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>ResetPassword:</span><input type="text" value={save[member.id] ? save[member.id].password : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberTeam">
                                                             <span>Team:</span>
                                                             <select value={selectedTeamName} onChange={(e) => { setSave({ ...save, [member.id]: { ...save[member.id], team_id: (teams.find(team => team.team_name == e.target.value && team.company_id == user.company_id).id) } }); setSelectedTeamName(e.target.value) }}>
@@ -272,7 +273,7 @@ function UserTeams({ setHideNav, menu }) {
                                                                         <span className={!spreadPersonalInfo[member.id] ?
                                                                             "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" :
                                                                             "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title--triggered"
-                                                                        } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
+                                                                        } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, "", member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
                                                                             <span>{member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}</span>
                                                                         </span>
                                                                     )
@@ -292,7 +293,7 @@ function UserTeams({ setHideNav, menu }) {
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPhone"><span>Phone:</span><input type="text" value={save[member.id] ? save[member.id].member_phone : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_phone: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberAddress"><span>Address:</span><input type="text" value={save[member.id] ? save[member.id].member_address : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_address: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberUsername"><span>Username:</span><input type="text" value={save[member.id] ? save[member.id].username : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], username: e.target.value } })} /></span>
-                                                        <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>Password:</span><input type="text" value={save[member.id] ? save[member.id].password : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
+                                                        <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>ResetPassword:</span><input type="text" value={save[member.id] ? save[member.id].password : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberTeam">
                                                             <span>Team:</span>
                                                             <select value={selectedTeamName} onChange={(e) => { setSave({ ...save, [member.id]: { ...save[member.id], team_id: (teams.find(team => team.team_name == e.target.value && team.company_id == user.company_id).id) } }); setSelectedTeamName(e.target.value) }}>
@@ -370,7 +371,7 @@ function UserTeams({ setHideNav, menu }) {
                                                             (<span className={!spreadPersonalInfo[member.id] ?
                                                                 "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" :
                                                                 "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title--triggered"
-                                                            } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, member.password, member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
+                                                            } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, "", member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
                                                                 <span>{member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}</span>
                                                             </span>)
                                                     }
@@ -385,7 +386,7 @@ function UserTeams({ setHideNav, menu }) {
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPhone"><span>Phone:</span><input type="text" value={save[member.id] ? save[member.id].member_phone : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_phone: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberAddress"><span>Address:</span><input type="text" value={save[member.id] ? save[member.id].member_address : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], member_address: e.target.value } })} /></span>
                                                         <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberUsername"><span>Username:</span><input type="text" value={save[member.id] ? save[member.id].username : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], username: e.target.value } })} /></span>
-                                                        <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>Password:</span><input type="text" value={save[member.id] ? save[member.id].password : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
+                                                        <span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-memberPassword"><span>ResetPassword:</span><input type="text" value={save[member.id] ? save[member.id].password : ""} onChange={(e) => setSave({ ...save, [member.id]: { ...save[member.id], password: e.target.value } })} /></span>
                                                         <button type="submit" className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info-button">Save</button>
                                                     </section>
                                                 </form>
