@@ -45,6 +45,16 @@
                 }
             }
 
+            &-password{
+                @include flex(row,flex-end,center);
+                & img{
+                    position: absolute;
+                    margin-bottom: 15px;
+                    margin-right: 15px;
+                    
+                }
+            }
+
             &-buttons {
                 width: 100%;
                 @include flex(column, space-around, flex-end);
