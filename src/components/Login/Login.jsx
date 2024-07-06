@@ -2,10 +2,12 @@ import "./Login.scss"
 import close from "../../assets/icons/close.svg"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import visible from "../../assets/icons/visible.svg"
+import notVisible from "../../assets/icons/notVisible.svg"
 
 
 function Login({ popup, setPopup, handleLogin }) {
+    const [eyes, setEyes] = useState(false);
     const nav = useNavigate();
     const API_URL = import.meta.env.VITE_API_URL;
     const [login, setLogin] = useState(
@@ -25,7 +27,10 @@ function Login({ popup, setPopup, handleLogin }) {
                 <h1 className="login__container-title">Welcome to EMS</h1>
                 <form className="login__container-form" onSubmit={e => handleLogin(e, login, navFunction)}>
                     <input className="login__container-form-input" type="text" placeholder="username" onChange={e => setLogin({ ...login, username: e.target.value })} value={login.username} />
-                    <input className="login__container-form-input" type="password" placeholder="password" onChange={e => setLogin({ ...login, password: e.target.value })} value={login.password} />
+                    <div className="login__container-form-password">
+                    <input className="login__container-form-input" type={eyes == false ? "password" : "text"} placeholder="password" onChange={e => setLogin({ ...login, password: e.target.value })} value={login.password} />
+                    <img src={eyes == false ? notVisible : visible} alt="" onClick={() => setEyes(!eyes)} />
+                    </div>
                     <section className="login__container-form-buttons">
                         <button className="login__container-form-buttons--1" type="submit">Log In</button>
                         <button className="login__container-form-buttons--2" onClick={() => nav("/Register")}>Register as a company</button>

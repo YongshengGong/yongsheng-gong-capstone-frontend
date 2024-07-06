@@ -105,7 +105,7 @@ function ApplyPage() {
         <div className="apply" onClick={() => setShowDropdown(false)}>
             {contextHolder}
             <main className="apply__main">
-                <img className="register__main-logo" src={logo} alt="the logo of EMS" onClick={() => { nav("/") }} />
+                <img className="apply__main-logo" src={logo} alt="the logo of EMS" onClick={() => { nav("/") }} />
                 <h1 className="apply__main-title">Apply to be a company member</h1>
                 <form className="apply__main-form" onSubmit={handleSubmit}>
                     <input className="apply__main-form-input" type="text" placeholder="search for a company" onChange={e => { handleSearch(e) }} onFocus={handleFocus} onClick={e => { e.stopPropagation() }} value={companyName.company_name} />
@@ -130,7 +130,6 @@ function ApplyPage() {
                     <input className="apply__main-form-input" type="text" placeholder="address" onChange={e => setApplicant({ ...applicant, member_address: e.target.value })} value={applicant.member_address} />
                     <section className="apply__main-form-buttons">
                         <button className="apply__main-form-buttons--1" type="submit">Apply now</button>
-                        {/* <button className="apply__main-form-buttons--2" onClick={()=>nav("/Register")}>Register</button> */}
                     </section>
                     <p>The company's manager will contact you once your application is approved.</p>
                 </form>
