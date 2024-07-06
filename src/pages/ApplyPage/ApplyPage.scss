@@ -7,6 +7,7 @@
     font-family: "titillium";
     animation: fade-in 0.3s ease-in-out;
     height: 100%;
+    padding-top: 3rem;
 
     &__main {
         @include flex(column, flex-start, center);
@@ -21,6 +22,15 @@
             margin-bottom: 1rem;
             color: white;
             text-align: center;
+        }
+
+        &-logo{
+            position: absolute;
+            left: 1.22rem;
+            top: 1.22rem;
+            &:hover {
+                cursor: url("../../assets/icons/click.svg"), auto;
+            }
         }
 
         &-form {
@@ -86,6 +96,15 @@
                     font-family: "titillium";
                     font-size: 15px;
                     border: none;
+
+                    &:hover {
+                        cursor: url("../../assets/icons/click.svg"), auto;
+                        font-size: 20px;
+                    }
+
+                    &:active {
+                        transform: translateY(5px);
+                    }
                 }
 
                 &--1 {
@@ -95,15 +114,6 @@
 
                     &:hover {
                         cursor: url("../../assets/icons/click.svg"), auto;
-                    }
-                }
-
-                &--2 {
-                    color: #0095FF;
-                    background-color: #FFFFFF;
-
-                    &:hover {
-                        border: 2px solid #0095FF;
                     }
                 }
             }

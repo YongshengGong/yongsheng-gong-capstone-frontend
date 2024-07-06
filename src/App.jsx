@@ -1,7 +1,6 @@
-import { MenuOutlined, PlusCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import { Input, Alert, notification } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
+import { Alert, notification } from 'antd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState} from 'react';
 import axios from "axios";
 import './App.scss'
 import HomePage from "./pages/HomePage/HomePage";
@@ -11,11 +10,11 @@ import ApplyPage from "./pages/ApplyPage/ApplyPage";
 
 function App() {
   const [api, contextHolder] = notification.useNotification();
-  const openNotification = () => {
+  const invalid = () => {
       api.info({
           message: "Error",
           description: <Alert message="Invalid username or password" type="error" />,
-          placement: "bottomRight",
+          placement: "topRight",
           duration: 4,
           icon: <InfoCircleOutlined style={{ color: 'red' }} />
       });
@@ -31,8 +30,7 @@ function App() {
     }
     }
     catch(e){
-      openNotification();
-      console.log(e)
+      invalid();
     }
   }
 

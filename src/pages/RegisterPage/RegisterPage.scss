@@ -6,6 +6,8 @@
 .register {
     font-family: "titillium";
     animation: fade-in 0.3s ease-in-out;
+    height: 100%;
+    padding-top: 3rem;
 
     &__main {
         @include flex(column, flex-start, center);
@@ -18,6 +20,9 @@
             position: absolute;
             left: 1.22rem;
             top: 1.22rem;
+            &:hover {
+                cursor: url("../../assets/icons/click.svg"), auto;
+            }
         }
 
         &-title {
@@ -45,13 +50,14 @@
                 }
             }
 
-            &-password{
-                @include flex(row,flex-end,center);
-                & img{
+            &-password {
+                @include flex(row, flex-end, center);
+
+                & img {
                     position: absolute;
                     margin-bottom: 15px;
                     margin-right: 15px;
-                    
+
                 }
             }
 
@@ -66,21 +72,21 @@
                     font-family: "titillium";
                     font-size: 15px;
                     border: none;
+
+                    &:hover {
+                        cursor: url("../../assets/icons/click.svg"), auto;
+                        font-size: 20px;
+                    }
+
+                    &:active {
+                        transform: translateY(5px);
+                    }
                 }
 
                 &--1 {
                     color: #FFFFFF;
                     background-color: #0095FF;
                     margin-bottom: 1rem;
-                }
-
-                &--2 {
-                    color: #0095FF;
-                    background-color: #FFFFFF;
-
-                    &:hover {
-                        border: 2px solid #0095FF;
-                    }
                 }
             }
         }

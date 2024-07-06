@@ -16,6 +16,9 @@
     &__logo {
         position: absolute;
         left: 1.22rem;
+        &:hover {
+            cursor: url("../../assets/icons/click.svg"), auto;
+        }
     }
 
     &__nav {
@@ -31,6 +34,12 @@
 
                 &:hover {
                     color: rgba(62, 32, 183, 0.2);
+                        cursor: url("../../assets/icons/click.svg"), auto;
+                        font-size: 25px;
+                }
+
+                &:active {
+                    transform: translateY(5px);
                 }
             }
         }
