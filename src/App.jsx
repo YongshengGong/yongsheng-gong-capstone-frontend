@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { Alert, notification } from 'antd';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -25,8 +26,9 @@ function App() {
     try{
     const res = await axios.post(`${API_URL}/members/login`, login);
     if(res.data){
-      sessionStorage.setItem('user', JSON.stringify(res.data));
-      navFunction(res.data.id);
+      // sessionStorage.setItem('user', JSON.stringify(res.data));
+      sessionStorage.setItem("token",res.data.token);
+      navFunction(jwtDecode(res.data.token).id);
     }
     }
     catch(e){

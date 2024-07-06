@@ -9,7 +9,6 @@ import notVisible from "../../assets/icons/notVisible.svg"
 function Login({ popup, setPopup, handleLogin }) {
     const [eyes, setEyes] = useState(false);
     const nav = useNavigate();
-    const API_URL = import.meta.env.VITE_API_URL;
     const [login, setLogin] = useState(
         {
             username: "",
