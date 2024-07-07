@@ -21,7 +21,7 @@
             left: 1.22rem;
             top: 1.22rem;
             &:hover {
-                cursor: url("../../assets/icons/click.svg"), auto;
+                cursor: pointer;
             }
         }
 
@@ -74,7 +74,7 @@
                     border: none;
 
                     &:hover {
-                        cursor: url("../../assets/icons/click.svg"), auto;
+                        cursor: pointer;
                         font-size: 20px;
                     }
 

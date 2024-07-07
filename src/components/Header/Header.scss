@@ -17,7 +17,7 @@
         position: absolute;
         left: 1.22rem;
         &:hover {
-            cursor: url("../../assets/icons/click.svg"), auto;
+            cursor: pointer;
         }
     }
 
@@ -34,7 +34,7 @@
 
                 &:hover {
                     color: rgba(62, 32, 183, 0.2);
-                        cursor: url("../../assets/icons/click.svg"), auto;
+                        cursor: pointer;
                         font-size: 25px;
                 }
 

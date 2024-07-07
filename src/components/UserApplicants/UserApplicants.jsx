@@ -121,8 +121,8 @@ function UserApplicants({ setHideNav, menu }) {
                                                     <button type="button" className="user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-info-button">Refuse</button>
                                                     <section className="user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-info-email">
                                                         <span>Or send an email first:</span>
-                                                        <div><span>Subject</span><input type="text" value={email[member.id] ? email[member.id].subject : ""} onChange={(e) => setEmail({ ...email, [member.id]: { ...email[member.id], subject: e.target.value } })} /></div>
-                                                        <div><span>Body</span><textarea type="text" value={email[member.id] ? email[member.id].body : ""} onChange={(e) => setEmail({ ...email, [member.id]: { ...email[member.id], body: e.target.value } })}></textarea></div>
+                                                        <div><span>Subject🔽</span><input type="text" value={email[member.id] ? email[member.id].subject : ""} onChange={(e) => setEmail({ ...email, [member.id]: { ...email[member.id], subject: e.target.value } })} /></div>
+                                                        <div><span>Body🔽</span><textarea type="text" value={email[member.id] ? email[member.id].body : ""} onChange={(e) => setEmail({ ...email, [member.id]: { ...email[member.id], body: e.target.value } })}></textarea></div>
                                                     </section>
                                                     <button type="submit" onClick={() => openEmailClient(member.member_email, email[member.id].subject, email[member.id].body)} className="user__main-applicants-displayTeams-singleTeam-teamMembers-singleMember-info-button">Approve & Send the email</button>
                                                 </section>

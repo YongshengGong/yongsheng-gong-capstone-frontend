@@ -4,19 +4,35 @@
 @use "../../styles/topography" as *;
 
 .user__main-teams {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex(column, center, center);
     width: 100%;
     height: 100%;
     padding: 2rem;
+    @include tablet{
+        padding:10rem;
+        padding-top: 2rem;
+    }
+    @include desktop{
+        padding:20rem;
+        padding-top: 2rem;
+    }
 
     &--hide {
         display: none;
     }
 
-    &-title{
+    &-companyName {
+        position: absolute;
+        top: 0.8rem;
+        left: 3rem;
+        color: #13182C;
+    }
+
+    &-title {
+        display: block;
         font-size: 30px;
+        color: #13182C;
+        margin-top: 1rem;
     }
 
     &-nav {
@@ -25,24 +41,16 @@
         margin-bottom: 2rem;
 
         &-home {
-            position: relative;
+            position: absolute;
             z-index: 2;
             left: 1rem;
-            top: 1.6rem;
+            top: 1rem;
         }
 
         &-search {
             z-index: 1;
             width: 100%;
             height: 100%;
-
-            & .ant-input-outlined {
-                padding-left: 11%;
-
-                &:hover {
-                    padding-left: 9%;
-                }
-            }
         }
     }
 
@@ -56,7 +64,7 @@
             border-radius: 4px;
             margin-bottom: 1rem;
             padding: 0.5rem 1rem 1rem 1rem;
-            border: 3px solid #5C667E;
+            border: 3px solid #13182C;
 
             &:hover {
                 background-color: rgba(10, 9, 10, 0.1);
@@ -67,10 +75,17 @@
                 font-size: 22px;
                 display: block;
                 margin-bottom: 1rem;
+                color: #13182C;
                 @include flex(row, space-between, center);
 
                 &-delete {
-                    display: block;
+                    &:hover {
+                        cursor: pointer;
+                    }
+
+                    &:active {
+                        transform: translateY(5px);
+                    }
                 }
             }
 
@@ -95,17 +110,16 @@
                         height: 100%;
                         display: block;
                         color: #2E66E5;
-                        
+
                         &--triggered {
                             font-weight: bold;
                             font-size: 20px;
                         }
-                        // & span{
-                        //     display: block;
-                        //     width: 100%;
-                        //     height:100%;
-                        //     font-size: 20px;
-                        // }
+
+                        &:hover {
+                            cursor: pointer;
+                            font-size: 20px;
+                        }
                     }
 
 
@@ -121,7 +135,6 @@
                             height: 100%;
                             display: block;
                             margin-bottom: 0.2rem;
-                            font-weight: bold;
                             @include flex(row, space-between, center);
 
                             @media (max-width:200px) {
@@ -164,6 +177,15 @@
                             font-size: 15px;
                             margin-bottom: 0.5rem;
                             margin-top: 0.5rem;
+
+                            &:hover {
+                                cursor: pointer;
+                                font-size: 20px;
+                            }
+
+                            &:active {
+                                transform: translateY(5px);
+                            }
                         }
                     }
                 }
@@ -173,19 +195,25 @@
         &-addNewTeam {
             width: 100%;
             padding: 0rem 1rem 1rem 1rem;
-            border: 3px solid #5C667E;
+            border: 3px solid #13182C;
             border-radius: 5px;
             @include flex(column, center, center);
 
             &-icon {
-                font-size: 30px;
-                margin-bottom: 0.5rem;
-                margin-top:1rem;
-                transition: font-size,margin-top 1s;
+                display: block;
+                margin-top: 0.8rem;
 
                 &--hide {
-                    font-size: 0;
-                    margin-top:0;
+                    display: none;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    font-size: 20px;
+                }
+
+                &:active {
+                    transform: translateY(5px);
                 }
             }
 
@@ -195,6 +223,13 @@
                 transition: height 1s;
                 overflow: hidden;
                 @include flex(column, space-between, center);
+
+                & img {
+                    &:hover {
+                        cursor: pointer;
+                        font-size: 20px;
+                    }
+                }
 
                 &>* {
                     display: block;
@@ -246,6 +281,15 @@
                     font-size: 15px;
                     margin-bottom: 0.5rem;
                     margin-top: 0.5rem;
+
+                    &:hover {
+                        cursor: pointer;
+                        font-size: 20px;
+                    }
+
+                    &:active {
+                        transform: translateY(5px);
+                    }
                 }
             }
         }

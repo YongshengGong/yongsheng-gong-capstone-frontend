@@ -63,6 +63,7 @@ function RegisterPage() {
         }
     )
     const [eyes, setEyes] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
         const allMembers = await axios.get(`${API_URL}/members`);
@@ -104,7 +105,8 @@ function RegisterPage() {
                 ...register
             });
             success();
-            setTimeout(() => { nav("/") }, 2000);
+            setIsDisabled(true);
+            setTimeout(() => { nav("/"); setIsDisabled(false); }, 2000);
         }
     }
 
@@ -122,7 +124,7 @@ function RegisterPage() {
                         <img src={eyes == false ? notVisible : visible} alt="" onClick={() => setEyes(!eyes)} />
                     </div>
                     <section className="register__main-form-buttons">
-                        <button className="register__main-form-buttons--1" type="submit">Register now</button>
+                        <button className="register__main-form-buttons--1" type="submit" disabled={isDisabled}>{isDisabled ? 'Please wait...' : 'Register now'}</button>
                     </section>
                 </form>
             </main>
