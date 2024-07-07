@@ -293,9 +293,12 @@ function UserTeams({ setHideNav, menu }) {
                 <nav className="user__main-teams-nav" onClick={(e) => e.stopPropagation()}>
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                     <Search
-                        className="user__main-teams-nav-search"
-                        allowClear
-                    // onSearch={onSearch}
+                         className="user__main-teams-nav-search"
+                         allowClear
+                         onSearch={onSearch}
+                         onFocus={handleFocus}
+                         onChange={e => { handleSearch(e) }}
+                         value={memberName.member_name}
                     />
                 </nav>
                 <section className={showDropdown ? "user__main-teams-dropdown" : "user__main-teams-dropdown user__main-teams-dropdown--hide"}>
@@ -326,7 +329,7 @@ function UserTeams({ setHideNav, menu }) {
                                     {
                                         members.filter(member => member.team_id == team.id).map((member) => {
                                             return (
-                                                <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
+                                                <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} id={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
                                                     {
                                                         teams.find(team => team.id == member.team_id).team_name == "Boss (Default)" ?
                                                             (<span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => { openNotification1(); setDummy(prev => !prev) }}>
@@ -416,9 +419,12 @@ function UserTeams({ setHideNav, menu }) {
                 <nav className="user__main-teams-nav" onClick={(e) => e.stopPropagation()}>
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                     <Search
-                        className="user__main-teams-nav-search"
-                        allowClear
-                    // onSearch={onSearch}
+                           className="user__main-teams-nav-search"
+                           allowClear
+                           onSearch={onSearch}
+                           onFocus={handleFocus}
+                           onChange={e => { handleSearch(e) }}
+                           value={memberName.member_name}
                     />
                 </nav>
                 <section className={showDropdown ? "user__main-teams-dropdown" : "user__main-teams-dropdown user__main-teams-dropdown--hide"}>
@@ -445,7 +451,7 @@ function UserTeams({ setHideNav, menu }) {
                                     {
                                         members.filter(member => member.team_id == team.id).map((member) => {
                                             return (
-                                                <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
+                                                <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} id={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
                                                     {
                                                         member.id != user.id ?
                                                             (<span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => { openNotification1(); setDummy(prev => !prev) }}>
