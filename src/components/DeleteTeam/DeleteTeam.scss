@@ -40,6 +40,17 @@
 
             @include tablet {
                 width: 20%;
+                // font-family: "titillium";
+            }
+
+
+            &:hover {
+                cursor: pointer;
+                font-size: 20px;
+            }
+
+            &:active {
+                transform: translateY(5px);
             }
         }
 

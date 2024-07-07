@@ -4,24 +4,27 @@
 @use "../../styles/topography" as *;
 
 .user__main-applicants {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex(column, center, center);
     width: 100%;
     height: 100%;
     padding: 2rem;
+    @include tablet{
+        padding:10rem;
+        padding-top: 2rem;
+    }
+    @include desktop{
+        padding:20rem;
+        padding-top: 2rem;
+    }
 
     &--hide {
         display: none;
     }
 
     &-nav {
-        width: 100%;
-        height: 100%;
-        margin-bottom: 2rem;
 
         &-home {
-            position: relative;
+            position: absolute;
             z-index: 2;
             left: 1rem;
             top: 1rem;
@@ -37,8 +40,8 @@
             height: 100%;
             border-radius: 4px;
             margin-bottom: 1rem;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
+            padding: 0.5rem 1rem 1rem 1rem;
+            border: 3px solid #13182C;
 
             &:hover {
                 background-color: rgba(10, 9, 10, 0.1);
@@ -46,8 +49,10 @@
 
             &-teamName {
                 font-weight: bold;
+                font-size: 22px;
                 display: block;
-                margin-bottom: 0.5rem;
+                margin-bottom: 1rem;
+                color: #13182C;
             }
 
             &-teamMembers {
@@ -61,11 +66,25 @@
 
                     &:hover {
                         background-color: rgba(36, 33, 36, 0.304);
+                        border-radius: 5px;
                     }
 
                     &-title {
-                        display: block;
+                        transition: font-size 1s;
                         width: 100%;
+                        height: 100%;
+                        display: block;
+                        color: #2E66E5;
+
+                        &--triggered {
+                            font-weight: bold;
+                            font-size: 20px;
+                        }
+
+                        &:hover {
+                            cursor: pointer;
+                            font-size: 20px;
+                        }
                     }
 
                     &-info {
@@ -89,9 +108,25 @@
                                 border-bottom: 1px solid #E1E1E1;
                             }
 
-                            &>* {
+                            &>input,
+                            select {
+                                padding-left: 0.5rem;
                                 display: block;
+                                height: 30px;
                                 width: 50%;
+                                border-radius: 5px;
+                                border: none;
+                            }
+                        }
+
+                        &>section {
+                            & input {
+                                padding-left: 0.5rem;
+                                display: block;
+                                height: 30px;
+                                width: 100%;
+                                border-radius: 5px;
+                                border: none;
                             }
                         }
 
@@ -106,11 +141,20 @@
                             border: none;
                             color: #FFFFFF;
                             text-align: center;
-                            padding: 0.5rem 0.25rem;
+                            padding: 0.7rem 0.25rem;
                             border-radius: 5px;
                             font-family: "titillium";
                             font-size: 15px;
                             margin-bottom: 1rem;
+
+                            &:hover {
+                                cursor: pointer;
+                                font-size: 20px;
+                            }
+
+                            &:active {
+                                transform: translateY(5px);
+                            }
                         }
 
                         &-email {
