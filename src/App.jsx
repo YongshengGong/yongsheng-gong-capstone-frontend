@@ -12,26 +12,37 @@ import ApplyPage from "./pages/ApplyPage/ApplyPage";
 function App() {
   const [api, contextHolder] = notification.useNotification();
   const invalid = () => {
-      api.info({
-          message: "Error",
-          description: <Alert message="Invalid username or password" type="error" />,
-          placement: "topRight",
-          duration: 4,
-          icon: <InfoCircleOutlined style={{ color: 'red' }} />
-      });
+    api.info({
+      message: "Error",
+      description: <Alert message="Invalid username or password" type="error" />,
+      placement: "topRight",
+      duration: 3,
+      icon: <InfoCircleOutlined style={{ color: 'red' }} />
+    });
+  };
+  const cannotBeEmpty = () => {
+    api.info({
+      message: "Error",
+      description: <Alert message="All input fields must be filled" type="error" />,
+      placement: "topRight",
+      duration: 3,
+      icon: <InfoCircleOutlined style={{ color: 'red' }} />
+    });
   };
   const API_URL = import.meta.env.VITE_API_URL;
   const handleLogin = async (e, login, navFunction) => {
     e.preventDefault();
-    try{
-    const res = await axios.post(`${API_URL}/members/login`, login);
-    if(res.data){
-      // sessionStorage.setItem('user', JSON.stringify(res.data));
-      sessionStorage.setItem("token",res.data.token);
-      navFunction(jwtDecode(res.data.token).id);
+    try {
+      if (!login.username || !login.password) {
+        cannotBeEmpty();
+      }
+      else {
+        const res = await axios.post(`${API_URL}/members/login`, login);
+        sessionStorage.setItem("token", res.data.token);
+        navFunction(jwtDecode(res.data.token).id);
+      }
     }
-    }
-    catch(e){
+    catch (e) {
       invalid();
     }
   }
@@ -40,7 +51,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage handleLogin={handleLogin} />} />
-        <Route path="/User/:userID" element={<User/>} />
+        <Route path="/User/:userID" element={<User />} />
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
       </Routes>
