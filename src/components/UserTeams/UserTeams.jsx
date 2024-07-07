@@ -298,6 +298,20 @@ function UserTeams({ setHideNav, menu }) {
                     // onSearch={onSearch}
                     />
                 </nav>
+                <section className={showDropdown ? "user__main-teams-dropdown" : "user__main-teams-dropdown user__main-teams-dropdown--hide"}>
+                    {
+                        <ul>
+                            {
+                                dropdownMember.filter(member => member.company_id == user.company_id && teams.find(team => team.id == member.team_id).team_name != "Applicants").map(member => {
+                                    return (
+                                        <li key={member.id} onClick={() => handleOptionClick(member.member_name)}>{member.member_name}→{teams.find(team => team.id == member.team_id).team_name}</li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    }
+                </section>
+                <span>Teams🔽</span>
                 <section className="user__main-teams-displayTeams">
                     {
                         teams.filter(team => team.team_name != "Applicants" && team.company_id == user.company_id).map(team => {
@@ -407,6 +421,20 @@ function UserTeams({ setHideNav, menu }) {
                     // onSearch={onSearch}
                     />
                 </nav>
+                <section className={showDropdown ? "user__main-teams-dropdown" : "user__main-teams-dropdown user__main-teams-dropdown--hide"}>
+                    {
+                        <ul>
+                            {
+                                dropdownMember.filter(member => member.company_id == user.company_id && teams.find(team => team.id == member.team_id).team_name != "Applicants").map(member => {
+                                    return (
+                                        <li key={member.id} onClick={() => handleOptionClick(member.member_name)}>{member.member_name}→{teams.find(team => team.id == member.team_id).team_name}</li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    }
+                </section>
+                <span>Teams🔽</span>
                 <section className="user__main-teams-displayTeams">
                     {
                         teams.filter(team => team.team_name != "Applicants" && team.company_id == user.company_id).map(team => {
