@@ -31,8 +31,8 @@ function UserNav({ hideNav, setHideNav, handleMenu, menu }) {
                 <div className="user__main-nav-container-logo"><img src={logo} alt="a logo of EMS" /></div>
                 <ul className="user__main-nav-container-list">
                     {/* <li className="user__main-nav-container-list-item"><span></span></li> */}
-                    <li className="user__main-nav-container-list-item" onClick={() => { handleMenu("teams"); setHideNav(true); setDummy(prev => !prev) }}><span>Teams</span></li>
-                    <li className={["Boss (Default)", "Managers (Default)"].includes(userTeam) ? "user__main-nav-container-list-item" : "user__main-nav-container-list-item user__main-nav-container-list-item--hide"}
+                    <li className={`user__main-nav-container-list-item ${menu=="teams"?"user__main-nav-container-list-item--highlight":false}`} onClick={() => { handleMenu("teams"); setHideNav(true); setDummy(prev => !prev) }}><span>Teams</span></li>
+                    <li className={["Boss (Default)", "Managers (Default)"].includes(userTeam) ? (`user__main-nav-container-list-item ${menu=="applicants"?"user__main-nav-container-list-item--highlight":false}`) : (`user__main-nav-container-list-item user__main-nav-container-list-item--hide ${menu=="teams"?"user__main-nav-container-list-item--highlight":false}`) }
                         onClick={() => { handleMenu("applicants"); setHideNav(true); setDummy(prev => !prev) }}>
                         <span>Applicants</span>
                     </li>

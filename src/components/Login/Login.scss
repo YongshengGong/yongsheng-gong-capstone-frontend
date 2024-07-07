@@ -97,7 +97,7 @@
                     border: none;
 
                     &:hover {
-                        cursor: url("../../assets/icons/click.svg"), auto;
+                        cursor: pointer;
                         font-size: 20px;
                     }
 
@@ -141,7 +141,7 @@
             }
 
             &:hover {
-                cursor: url("../../assets/icons/click.svg"), auto;
+                cursor: pointer;
                 background-color: #0095FF;
             }
         }

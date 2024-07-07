@@ -54,6 +54,7 @@ function ApplyPage() {
     const [showDropdown, setShowDropdown] = useState(false);
     const [companies, setCompanies] = useState([]);
     const [allCompanies, setAllCompanies] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false);
     useEffect(() => {
         const fetchCompanies = async () => {
             const res = await axios.get(`${API_URL}/companies`);
@@ -80,7 +81,8 @@ function ApplyPage() {
                 ...applicant
             });
             success();
-            setTimeout(() => { nav("/") }, 2000);
+            setIsDisabled(true);
+            setTimeout(() => { nav("/"); setIsDisabled(false)}, 2000);
         }
     }
     const handleSearch = (e) => {
@@ -129,7 +131,7 @@ function ApplyPage() {
                     <input className="apply__main-form-input" type="text" placeholder="phone" onChange={e => setApplicant({ ...applicant, member_phone: e.target.value })} value={applicant.member_phone} />
                     <input className="apply__main-form-input" type="text" placeholder="address" onChange={e => setApplicant({ ...applicant, member_address: e.target.value })} value={applicant.member_address} />
                     <section className="apply__main-form-buttons">
-                        <button className="apply__main-form-buttons--1" type="submit">Apply now</button>
+                        <button className="apply__main-form-buttons--1" type="submit" disabled={isDisabled}>{isDisabled ? 'Please wait...' : 'Apply now'}</button>
                     </section>
                     <p>The company's manager will contact you once your application is approved.</p>
                 </form>

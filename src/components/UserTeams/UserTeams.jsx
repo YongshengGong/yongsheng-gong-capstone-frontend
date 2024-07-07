@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import trash from "../../assets/icons/trash.svg";
 import close from "../../assets/icons/close.svg";
+import add from "../../assets/icons/add.svg";
 import DeleteTeam from "../DeleteTeam/DeleteTeam";
 
 function UserTeams({ setHideNav, menu }) {
@@ -22,6 +23,7 @@ function UserTeams({ setHideNav, menu }) {
     const [error, setError] = useState(false);
     const [selectedTeamName, setSelectedTeamName] = useState("");
     const [dummy, setDummy] = useState(false);
+    const [companies,setCompanies] = useState(null);
 
     const [api, contextHolder] = notification.useNotification();
     const openNotification = () => {
@@ -45,6 +47,8 @@ function UserTeams({ setHideNav, menu }) {
 
     useEffect(() => {
         const fetch = async () => {
+            const allCompanies = await axios.get(`${API_URL}/companies`);
+            setCompanies(allCompanies.data);
             const allTeams = await axios.get(`${API_URL}/teams`);
             setTeams(allTeams.data);
             const allMembers = await axios.get(`${API_URL}/members`);
@@ -58,7 +62,12 @@ function UserTeams({ setHideNav, menu }) {
         return (<>loading...</>)
     }
     const { Search } = Input;
-    // const onSearch = value => console.log(value);
+    const onSearch = (value) => {
+        console.log(value);
+    }
+    const handleFocus = () => {
+
+    }
     const handleChildClick = (event) => {
         event.stopPropagation();
     };
@@ -141,19 +150,23 @@ function UserTeams({ setHideNav, menu }) {
         fetch();
     }
     let userTeamName = teams.find(team => team.id == user.team_id).team_name;
+    let companyName = companies.find(company=>company.id==user.company_id).company_name;
     if (userTeamName == "Boss (Default)") {
         return (
             <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
                 {contextHolder}
+                <span className="user__main-teams-companyName">{companyName}</span>
                 <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
                 <nav className="user__main-teams-nav">
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                     <Search
                         className="user__main-teams-nav-search"
                         allowClear
-                    // onSearch={onSearch}
+                    onSearch={onSearch}
+                    onFocus={handleFocus}
                     />
                 </nav>
+                <span>Teams🔽</span>
                 <section className="user__main-teams-displayTeams">
                     {
                         teams.filter(team => team.team_name != "Applicants" && team.company_id == user.company_id).map(team => {
@@ -173,7 +186,7 @@ function UserTeams({ setHideNav, menu }) {
                                                         "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" :
                                                         "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title--triggered"
                                                     } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, "", member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
-                                                        <span>{member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}</span>
+                                                        <span>{member.id == user.id ? `${member.member_name} (me✔️)` : member.member_name}</span>
                                                     </span>
                                                     <section
                                                         className={`user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-info ${spreadPersonalInfo[member.id] ?
@@ -206,12 +219,13 @@ function UserTeams({ setHideNav, menu }) {
                         })
                     }
                     <form className="user__main-teams-displayTeams-addNewTeam" onSubmit={handleAddNewTeam}>
-                        <PlusCircleOutlined className=
+                        <img className=
                             {addNewTeamButton == false ?
                                 "user__main-teams-displayTeams-addNewTeam-icon" :
                                 "user__main-teams-displayTeams-addNewTeam-icon user__main-teams-displayTeams-addNewTeam-icon--hide"
                             }
                             onClick={() => setAddNewTeamButton(true)}
+                            src={add}
                         />
                         <div className=
                             {addNewTeamButton == true ?
@@ -234,7 +248,8 @@ function UserTeams({ setHideNav, menu }) {
         return (
             <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
                 {contextHolder}
-                <h1 className="user__main-teams-title">1Welcome， {members.find(member => member.id == user.id).member_name}</h1>
+                <span className="user__main-teams-companyName">{companyName}</span>
+                <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
                 <nav className="user__main-teams-nav">
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                     <Search
@@ -274,7 +289,7 @@ function UserTeams({ setHideNav, menu }) {
                                                                             "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" :
                                                                             "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title--triggered"
                                                                         } onClick={() => { handleEdit(member.member_name, member.id, member.company_id, member.team_id, member.username, "", member.member_title, member.member_email, member.member_phone, member.member_address, member.isTeamLeadOrNot); setDummy(prev => !prev) }}>
-                                                                            <span>{member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}</span>
+                                                                            <span>{member.id == user.id ? `${member.member_name} (me✔️)` : member.member_name}</span>
                                                                         </span>
                                                                     )
                                                                 )
@@ -313,12 +328,13 @@ function UserTeams({ setHideNav, menu }) {
                         })
                     }
                     <form className="user__main-teams-displayTeams-addNewTeam" onSubmit={handleAddNewTeam}>
-                        <PlusCircleOutlined className=
+                        <img className=
                             {addNewTeamButton == false ?
                                 "user__main-teams-displayTeams-addNewTeam-icon" :
                                 "user__main-teams-displayTeams-addNewTeam-icon user__main-teams-displayTeams-addNewTeam-icon--hide"
                             }
                             onClick={() => setAddNewTeamButton(true)}
+                            src={add}
                         />
                         <div className=
                             {addNewTeamButton == true ?
@@ -341,6 +357,7 @@ function UserTeams({ setHideNav, menu }) {
         return (
             <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
                 {contextHolder}
+                <span className="user__main-teams-companyName">{companyName}</span>
                 <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
                 <nav className="user__main-teams-nav">
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
@@ -364,7 +381,7 @@ function UserTeams({ setHideNav, menu }) {
                                                     {
                                                         member.id != user.id ?
                                                             (<span className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" onClick={() => { openNotification1(); setDummy(prev => !prev) }}>
-                                                                <span>{member.member_name == user.member_name ? `${member.member_name} (me✔️)` : member.member_name}</span>
+                                                                <span>{member.id == user.id ? `${member.member_name} (me✔️)` : member.member_name}</span>
                                                             </span>
                                                             )
                                                             :
