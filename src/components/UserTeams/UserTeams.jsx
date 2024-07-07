@@ -1,5 +1,5 @@
 import "./UserTeams.scss"
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { MenuOutlined, PlusCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { Input, Alert, notification } from 'antd';
 import axios from "axios";
@@ -23,7 +23,10 @@ function UserTeams({ setHideNav, menu }) {
     const [error, setError] = useState(false);
     const [selectedTeamName, setSelectedTeamName] = useState("");
     const [dummy, setDummy] = useState(false);
-    const [companies,setCompanies] = useState(null);
+    const [companies, setCompanies] = useState(null);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [dropdownMember, setDropdownMember] = useState([]);
+    const [memberName, setMemberName] = useState({ member_name: "" });
 
     const [api, contextHolder] = notification.useNotification();
     const openNotification = () => {
@@ -62,12 +65,34 @@ function UserTeams({ setHideNav, menu }) {
         return (<>loading...</>)
     }
     const { Search } = Input;
+
     const onSearch = (value) => {
-        console.log(value);
+        setShowDropdown(false);
+        const element = document.getElementById(members.find(member => member.member_name == value && member.company_id == user.company_id).id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
     }
     const handleFocus = () => {
-
+        setShowDropdown(true);
+        setDropdownMember(members);
     }
+    const handleOptionClick = (memberName) => {
+        setMemberName({ ...memberName, member_name: memberName });
+        setShowDropdown(false);
+    }
+    const handleSearch = (e) => {
+        setMemberName({ ...memberName, member_name: e.target.value });
+        if (e.target.value) {
+            const filteredMembers = members.filter(member =>
+                member.member_name.toLowerCase().includes(e.target.value.toLowerCase())
+            );
+            setDropdownMember(filteredMembers);
+        } else {
+            setDropdownMember(members);
+        }
+    }
+
     const handleChildClick = (event) => {
         event.stopPropagation();
     };
@@ -150,22 +175,37 @@ function UserTeams({ setHideNav, menu }) {
         fetch();
     }
     let userTeamName = teams.find(team => team.id == user.team_id).team_name;
-    let companyName = companies.find(company=>company.id==user.company_id).company_name;
+    let companyName = companies.find(company => company.id == user.company_id).company_name;
     if (userTeamName == "Boss (Default)") {
         return (
-            <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
+            <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => { setSpreadPersonalInfo(false); setShowDropdown(false) }}>
                 {contextHolder}
                 <span className="user__main-teams-companyName">{companyName}</span>
                 <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
-                <nav className="user__main-teams-nav">
+                <nav className="user__main-teams-nav" onClick={(e) => e.stopPropagation()}>
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                     <Search
                         className="user__main-teams-nav-search"
                         allowClear
-                    onSearch={onSearch}
-                    onFocus={handleFocus}
+                        onSearch={onSearch}
+                        onFocus={handleFocus}
+                        onChange={e => { handleSearch(e) }}
+                        value={memberName.member_name}
                     />
                 </nav>
+                <section className={showDropdown ? "user__main-teams-dropdown" : "user__main-teams-dropdown user__main-teams-dropdown--hide"}>
+                    {
+                        <ul>
+                            {
+                                dropdownMember.filter(member => member.company_id == user.company_id && teams.find(team => team.id == member.team_id).team_name != "Applicants").map(member => {
+                                    return (
+                                        <li key={member.id} onClick={() => handleOptionClick(member.member_name)}>{member.member_name}→{teams.find(team => team.id == member.team_id).team_name}</li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    }
+                </section>
                 <span>Teams🔽</span>
                 <section className="user__main-teams-displayTeams">
                     {
@@ -181,7 +221,7 @@ function UserTeams({ setHideNav, menu }) {
                                     {
                                         members.filter(member => member.team_id == team.id).map((member) => {
                                             return (
-                                                <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)}>
+                                                <form className="user__main-teams-displayTeams-singleTeam-teamMembers-singleMember" key={member.id} id={member.id} onClick={handleChildClick} onSubmit={(e) => handleSave(e, save[member.id], member.id)} >
                                                     <span className={!spreadPersonalInfo[member.id] ?
                                                         "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title" :
                                                         "user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title user__main-teams-displayTeams-singleTeam-teamMembers-singleMember-title--triggered"
@@ -246,11 +286,11 @@ function UserTeams({ setHideNav, menu }) {
     }
     else if (userTeamName == "Managers (Default)") {
         return (
-            <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
+            <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => { setSpreadPersonalInfo(false); setShowDropdown(false) }}>
                 {contextHolder}
                 <span className="user__main-teams-companyName">{companyName}</span>
                 <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
-                <nav className="user__main-teams-nav">
+                <nav className="user__main-teams-nav" onClick={(e) => e.stopPropagation()}>
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                     <Search
                         className="user__main-teams-nav-search"
@@ -355,11 +395,11 @@ function UserTeams({ setHideNav, menu }) {
     }
     else {
         return (
-            <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => setSpreadPersonalInfo(false)}>
+            <section className={menu === "teams" ? "user__main-teams" : "user__main-teams user__main-teams--hide"} onClick={() => { setSpreadPersonalInfo(false); setShowDropdown(false) }}>
                 {contextHolder}
                 <span className="user__main-teams-companyName">{companyName}</span>
                 <h1 className="user__main-teams-title">Welcome， {members.find(member => member.id == user.id).member_name}</h1>
-                <nav className="user__main-teams-nav">
+                <nav className="user__main-teams-nav" onClick={(e) => e.stopPropagation()}>
                     <MenuOutlined className="user__main-teams-nav-home" onClick={() => setHideNav(false)} />
                     <Search
                         className="user__main-teams-nav-search"
