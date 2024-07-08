@@ -174,7 +174,7 @@ function UserTeams({ setHideNav, menu }) {
         }
         fetch();
     }
-    let userTeamName = teams.find(team => team.id == user.team_id).team_name;
+    let userTeamName = teams.find(team => team.id == members.find(member=>member.id==user.id).team_id).team_name;
     let companyName = companies.find(company => company.id == user.company_id).company_name;
     if (userTeamName == "Boss (Default)") {
         return (
