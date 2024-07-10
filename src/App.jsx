@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import User from "./pages/User/User";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ApplyPage from "./pages/ApplyPage/ApplyPage";
+import Status from "./pages/Status/Status";
 
 function App() {
   const [api, contextHolder] = notification.useNotification();
@@ -54,6 +55,7 @@ function App() {
         <Route path="/User/:userID" element={<User />} />
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/Apply" element={<ApplyPage />} />
+        <Route path="/Status/:projectID" element={<Status />} />
       </Routes>
       {contextHolder}
     </BrowserRouter>

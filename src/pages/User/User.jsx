@@ -1,6 +1,7 @@
 import UserNav from "../../components/UserNav/UserNav";
 import UserTeams from "../../components/UserTeams/UserTeams";
 import UserApplicants from "../../components/UserApplicants/UserApplicants";
+import UserProjects from "../../components/UserProjects/UserProjects";
 import { useState } from "react";
 import "./User.scss"
 
@@ -16,6 +17,7 @@ function User() {
         <UserNav hideNav={hideNav} setHideNav={setHideNav} handleMenu={handleMenu} menu={menu} />
         <UserTeams setHideNav={setHideNav} menu={menu} />
         <UserApplicants setHideNav={setHideNav} menu={menu} />
+        <UserProjects setHideNav={setHideNav} menu={menu} />
       </main>
     </div>
   )

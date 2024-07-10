@@ -8,12 +8,14 @@
     width: 100%;
     height: 100%;
     padding: 2rem;
-    @include tablet{
-        padding:10rem;
+
+    @include tablet {
+        padding: 10rem;
         padding-top: 2rem;
     }
-    @include desktop{
-        padding:20rem;
+
+    @include desktop {
+        padding: 20rem;
         padding-top: 2rem;
     }
 
@@ -21,14 +23,11 @@
         display: none;
     }
 
-    &-nav {
-
-        &-home {
-            position: absolute;
-            z-index: 2;
-            left: 1rem;
-            top: 1rem;
-        }
+    &-home {
+        position: absolute;
+        z-index: 2;
+        left: 1rem;
+        top: 1rem;
     }
 
     &-displayTeams {
