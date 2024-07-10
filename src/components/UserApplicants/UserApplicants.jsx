@@ -85,7 +85,7 @@ function UserApplicants({ setHideNav, menu }) {
     return (
         <section className={menu === "applicants" ? "user__main-applicants" : "user__main-applicants user__main-applicants--hide"} onClick={() => setSpreadPersonalInfo(false)}>
 
-            <MenuOutlined className="user__main-applicants-nav-home" onClick={() => setHideNav(false)} />
+            <MenuOutlined className="user__main-applicants-home" onClick={() => setHideNav(false)} />
 
             <section className="user__main-applicants-displayTeams">
                 {

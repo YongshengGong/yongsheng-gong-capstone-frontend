@@ -1,0 +1,189 @@
+@use "../../styles/colors" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/fonts" as *;
+@use "../../styles/topography" as *;
+
+.user__main-projects {
+    width: 100%;
+    padding: 2rem;
+
+    &--hide {
+        display: none;
+    }
+
+    &-home {
+        position: absolute;
+        z-index: 2;
+        left: 1rem;
+        top: 1rem;
+    }
+
+    &-myTasks {
+        &--hide {
+            display: none;
+        }
+    }
+
+    &-groupProjects {
+        &--hide {
+            display: none;
+        }
+
+          &-projects{
+              &-project{
+                margin-top: 1rem;
+                width: 100%;
+                padding: 1rem 1rem 1rem 1rem;
+                border: 3px solid #13182C;
+                border-radius: 5px;
+                @include flex(column, space-between, flex-start);
+                &-name{
+
+                }
+                &-description{
+
+                }
+              }
+          }
+
+        &-addNewProject {
+            margin-top: 1rem;
+            width: 100%;
+            padding: 1rem 1rem 1rem 1rem;
+            border: 3px solid #13182C;
+            border-radius: 5px;
+            @include flex(column, space-between, center);
+
+            &-add {
+                &--hide {
+                    display: none;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    font-size: 20px;
+                }
+
+                &:active {
+                    transform: translateY(5px);
+                }
+            }
+
+            &-input {
+                width: 100%;
+                height: 300px;
+                transition: height 1s;
+                overflow: hidden;
+                @include flex(column, space-between, center);
+
+                & img {
+                    &:hover {
+                        cursor: pointer;
+                        font-size: 20px;
+                    }
+                }
+
+                &>* {
+                    display: block;
+                    width: 100%;
+                    border-radius: 5px;
+                    border: none;
+                }
+
+                &>span {
+                    top: 5px;
+                    font-weight: bold;
+                    @include flex(row, space-between, center);
+
+                    &>img {
+                        display: block;
+                        height: 20px;
+                    }
+                }
+
+                &>input {
+                    padding-left: 0.5rem;
+                    height: 40px;
+                }
+
+                &>textarea {
+                    padding-left: 0.5rem;
+                    padding-top: 0.5rem;
+                    height: 100px;
+                }
+
+                &--hide {
+                    height: 0px;
+                    overflow: hidden;
+                }
+
+                &-error {
+                    display: none !important;
+
+                    &--error {
+                        display: block !important;
+                        color: #C94515 !important;
+                    }
+                }
+
+                &-button {
+                    height:45px;
+                    display: block;
+                    width: 100%;
+                    background-color: #0095FF;
+                    border: none;
+                    color: #FFFFFF;
+                    text-align: center;
+                    border-radius: 5px;
+                    font-family: "titillium";
+                    font-size: 15px;
+                    box-sizing: content-box;
+
+                    &:hover {
+                        cursor: pointer;
+                        font-size: 20px;
+                    }
+
+                    &:active {
+                        transform: translateY(5px);
+                    }
+                }
+            }
+        }
+    }
+
+    &-footer {
+        height: 80px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        &-list {
+            height: 100%;
+            width: 100%;
+            border-top: 0.5px solid #13182C;
+            list-style: none;
+            @include flex(row, center, center);
+
+            &-item {
+                color: #13182C;
+                width: 100%;
+                height: 100%;
+                @include flex(row, center, center);
+
+                & span {
+
+                    // display: block;
+                    // width:100%;
+                    // height:100%;
+                    &:hover {
+                        border: 1px solid #13182C;
+                        padding: 0.5rem;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
