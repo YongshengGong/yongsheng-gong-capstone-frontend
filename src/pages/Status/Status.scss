@@ -1,0 +1,25 @@
+@use "../../styles/colors" as *;
+@use "../../styles/mixins" as *;
+@use "../../styles/fonts" as *;
+@use "../../styles/topography" as *;
+
+.status {
+    padding:2rem;
+    &-toDo {
+        &--hide {
+            display: none;
+        }
+    }
+
+    &-inProgress {
+        &--hide {
+            display: none;
+        }
+    }
+
+    &-done {
+        &--hide {
+            display: none;
+        }
+    }
+}
