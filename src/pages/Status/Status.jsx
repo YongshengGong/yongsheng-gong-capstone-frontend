@@ -52,17 +52,19 @@ function Status() {
 
     return (
         <section className="status">
+            <section>
             <img src={backArrow} alt="an icon of going back to the project page" onClick={() => { navigate(`/User/${user.id}`); localStorage.setItem('fromStatusPage', 'true') }} />
-            <section className={nav == "TO DO" ? "status-toDo" : "status-toDo--hide"}>
+            <span>Project: {projects.find(p=>p.id==projectID).project_name}</span>
+            </section>
+            <section className={nav == "TO DO" ? "status__toDo" : "status__toDo--hide"}>
                 {/* {thisTeamStatus[0].status_name} */}
-                <section>
+                <section className="status__toDo-tasks">
                     {
                         projectStatusTasks.filter(task => task.status_id == projectStatus.find(s => s.project_id == projectID && s.status_name == "TO DO").id).map(task => {
-                            return (<article key={task.id}>
+                            return (<article className="status__toDo-tasks-task" key={task.id}>
                                 <div><span>Task name: </span><span>{task.task_name}</span></div>
                                 <div><span>Task content: </span><p>{task.task_content}</p></div>
                             </article>
-
                             )
                         })
                     }
@@ -88,17 +90,17 @@ function Status() {
                     </div>
                 </form>
             </section>
-            <section className={nav == "IN PROGRESS" ? "status-inProgress" : "status-inProgress--hide"}>
+            <section className={nav == "IN PROGRESS" ? "status__inProgress" : "status__inProgress--hide"}>
                 {thisTeamStatus[1].status_name}
             </section>
-            <section className={nav == "DONE" ? "status-done" : "status-done--hide"}>
+            <section className={nav == "DONE" ? "status__done" : "status__done--hide"}>
                 {thisTeamStatus[2].status_name}
             </section>
-            <footer className="user__main-projects-footer">
-                <ul className="user__main-projects-footer-list">
-                    <li className="user__main-projects-footer-list-item"><span onClick={() => setNav("TO DO")}>TO DO</span></li>
-                    <li className="user__main-projects-footer-list-item"><span onClick={() => setNav("IN PROGRESS")}>IN PROGRESS</span></li>
-                    <li className="user__main-projects-footer-list-item"><span onClick={() => setNav("DONE")}>DONE</span></li>
+            <footer className="status__footer">
+                <ul className="status__footer-list">
+                    <li className={nav=="TO DO"?"status__footer-list-item status__footer-list-item--highlight":"status__footer-list-item"}><span onClick={() => setNav("TO DO")}>TO DO</span></li>
+                    <li className={nav=="IN PROGRESS"?"status__footer-list-item status__footer-list-item--highlight":"status__footer-list-item"}><span onClick={() => setNav("IN PROGRESS")}>IN PROGRESS</span></li>
+                    <li className={nav=="DONE"?"status__footer-list-item status__footer-list-item--highlight":"status__footer-list-item"}><span onClick={() => setNav("DONE")}>DONE</span></li>
                 </ul>
             </footer>
         </section>
