@@ -1,12 +1,11 @@
 import "./Status.scss"
-import { MenuOutlined } from '@ant-design/icons';
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import add from "../../assets/icons/add.svg";
 import close from "../../assets/icons/close.svg";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import backArrow from "../../assets/icons/back.svg";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Status() {
     const API_URL = import.meta.env.VITE_API_URL;
@@ -20,6 +19,7 @@ function Status() {
     const [newTask, setNewTask] = useState({ status_id: "", task_name: "", task_content: "" });
     const [error, setError] = useState(false);
     const { projectID } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetch = async () => {
@@ -41,29 +41,31 @@ function Status() {
     let statusID = thisTeamStatus[0].id;
     const handleSubmit = async (e) => {
         e.preventDefault();
-            await axios.post(`${API_URL}/project_status_tasks`, newTask);
-            const allProjectStatusTasks = await axios.get(`${API_URL}/project_status_tasks`);
-            setProjectStatusTasks(allProjectStatusTasks.data);
-            console.log(allProjectStatusTasks.data);
-            setNewTask({ status_id: statusID, task_name: "", task_content: "" });
-            setAddNewTask(false);
-            setError(false);
-        }
-   
+        await axios.post(`${API_URL}/project_status_tasks`, newTask);
+        const allProjectStatusTasks = await axios.get(`${API_URL}/project_status_tasks`);
+        setProjectStatusTasks(allProjectStatusTasks.data);
+        console.log(allProjectStatusTasks.data);
+        setNewTask({ status_id: statusID, task_name: "", task_content: "" });
+        setAddNewTask(false);
+        setError(false);
+    }
+
     return (
         <section className="status">
+            <img src={backArrow} alt="an icon of going back to the project page" onClick={() => { navigate(`/User/${user.id}`); localStorage.setItem('fromStatusPage', 'true') }} />
             <section className={nav == "TO DO" ? "status-toDo" : "status-toDo--hide"}>
-                {thisTeamStatus[0].status_name}
+                {/* {thisTeamStatus[0].status_name} */}
                 <section>
-                  {
-                    projectStatusTasks.map(task=>
-                        {return(<article>
-                           <div><span>Task name: </span><span>{task.task_name}</span></div>
-                           <div><span>Task content: </span><p>{task.task_content}</p></div>
-                        </article>
+                    {
+                        projectStatusTasks.filter(task => task.status_id == projectStatus.find(s => s.project_id == projectID && s.status_name == "TO DO").id).map(task => {
+                            return (<article key={task.id}>
+                                <div><span>Task name: </span><span>{task.task_name}</span></div>
+                                <div><span>Task content: </span><p>{task.task_content}</p></div>
+                            </article>
 
-                         )})
-                  }
+                            )
+                        })
+                    }
                 </section>
                 <form className="user__main-projects-groupProjects-addNewProject" onSubmit={(e) => { handleSubmit(e) }}>
                     <img src={add} alt="an icon of adding a new project" className={addNewTask == false ?

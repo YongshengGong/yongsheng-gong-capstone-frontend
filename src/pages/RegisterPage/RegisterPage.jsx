@@ -38,6 +38,7 @@ function RegisterPage() {
             icon: <InfoCircleOutlined style={{ color: 'red' }} />
         });
     };
+    
     const success = () => {
         api.info({
             message: "Account created successfully",

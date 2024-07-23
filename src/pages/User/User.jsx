@@ -2,12 +2,19 @@ import UserNav from "../../components/UserNav/UserNav";
 import UserTeams from "../../components/UserTeams/UserTeams";
 import UserApplicants from "../../components/UserApplicants/UserApplicants";
 import UserProjects from "../../components/UserProjects/UserProjects";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./User.scss"
 
 function User() {
   const [hideNav, setHideNav] = useState(true);
   const [menu, setMenu] = useState('teams');
+  useEffect(() => {
+    const fromStatusPage = localStorage.getItem('fromStatusPage');
+    if (fromStatusPage === 'true') {
+      setMenu("projects");
+      localStorage.removeItem('fromStatusPage'); 
+    }
+  }, []);
   const handleMenu = (state) => {
     setMenu(state);
   }
