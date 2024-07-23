@@ -36,7 +36,6 @@ function UserNav({ hideNav, setHideNav, handleMenu, menu }) {
             <nav className="user__main-nav-container" onClick={handleChildClick}>
                 <div className="user__main-nav-container-logo"><img src={logo} alt="a logo of EMS" /></div>
                 <ul className="user__main-nav-container-list">
-                    {/* <li className="user__main-nav-container-list-item"><span></span></li> */}
                     <li className={`user__main-nav-container-list-item ${menu == "teams" ? "user__main-nav-container-list-item--highlight" : false}`} onClick={() => { handleMenu("teams"); setHideNav(true); setDummy(prev => !prev) }}><span>Teams</span></li>
                     <li className={["Boss (Default)", "Managers (Default)"].includes(userTeam) ?
                         (`user__main-nav-container-list-item ${menu == "applicants" ? "user__main-nav-container-list-item--highlight" : false}`)
