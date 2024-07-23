@@ -81,8 +81,8 @@ function UserProjects({ setHideNav, menu }) {
                             <article><span>It's empty here, click below to start a new team project</span></article> :
                             projects.filter(project => project.team_id == members.find(member => member.id == user.id).team_id).map(project => {
                                 return (<article className="user__main-projects-groupProjects-projects-project" key={project.id}>
-                                    <div className="user__main-projects-groupProjects-projects-project-name" onClick={() => { handleGoToStatus(project.id) }}><span>Project name: </span><span>{project.project_name}</span></div>
-                                    <div className="user__main-projects-groupProjects-projects-project-description"> <span>Project description:</span> <p>{project.project_description}</p></div>
+                                    <div className="user__main-projects-groupProjects-projects-project-name"><span>Project: </span><span onClick={() => { handleGoToStatus(project.id) }}>{project.project_name}</span></div>
+                                    <div className="user__main-projects-groupProjects-projects-project-description"> <span>Description: </span> <p>{project.project_description}</p></div>
                                 </article>
                                 )
                             })
