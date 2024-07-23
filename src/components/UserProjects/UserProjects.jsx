@@ -38,7 +38,7 @@ function UserProjects({ setHideNav, menu }) {
             setProjectStatusTasks(allProjectStatusTasks.data);
         }
         fetch();
-    }, [menu]);
+    }, []);
     if (!teams || !members) {
         return (<>loading...</>)
     }
@@ -54,9 +54,9 @@ function UserProjects({ setHideNav, menu }) {
             setProjects(allProjects.data);
             let projectID = newlyAddedProject.data.id;
             console.log(newlyAddedProject.data);
-            await axios.post(`${API_URL}/project_status`, {project_id:projectID,status_name:"TO DO"});
-            await axios.post(`${API_URL}/project_status`, {project_id:projectID,status_name:"IN PROGRESS"});
-            await axios.post(`${API_URL}/project_status`, {project_id:projectID,status_name:"DONE"});
+            await axios.post(`${API_URL}/project_status`, { project_id: projectID, status_name: "TO DO" });
+            await axios.post(`${API_URL}/project_status`, { project_id: projectID, status_name: "IN PROGRESS" });
+            await axios.post(`${API_URL}/project_status`, { project_id: projectID, status_name: "DONE" });
             setNewProject({ team_id: teamID, project_name: "", project_description: "" });
             setAddNewProject(false);
             setError(false);
@@ -65,23 +65,24 @@ function UserProjects({ setHideNav, menu }) {
             setError(true);
         }
     }
-    const handleGoToStatus = (projectID) =>{
+    const handleGoToStatus = (projectID) => {
         navigate(`/Status/${projectID}`);
     }
 
     return (
         <section className={menu === "projects" ? "user__main-projects" : "user__main-projects user__main-projects--hide"}>
             <MenuOutlined className="user__main-projects-home" onClick={() => setHideNav(false)} />
-            <section className={nav == "My tasks" ? "user__main-projects-myTasks" : "user__main-projects-myTasks--hide"}>1</section>
-            <section className={nav == "Group projects" ? "user__main-projects-groupProjects" : "user__main-projects-groupProjects--hide"}>
+            {/* <section className={nav == "My tasks" ? "user__main-projects-myTasks" : "user__main-projects-myTasks--hide"}>1</section> */}
+            {/* <section className={nav == "Group projects" ? "user__main-projects-groupProjects" : "user__main-projects-groupProjects--hide"}> */}
+            <section className="user__main-projects-groupProjects">
                 <section className="user__main-projects-groupProjects-projects">
                     {
                         projects == null || projects.length == 0 ?
                             <article><span>It's empty here, click below to start a new team project</span></article> :
-                            projects.map(project => {
+                            projects.filter(project => project.team_id == members.find(member => member.id == user.id).team_id).map(project => {
                                 return (<article className="user__main-projects-groupProjects-projects-project" key={project.id}>
-                                   <div className="user__main-projects-groupProjects-projects-project-name" onClick={()=>{handleGoToStatus(project.id)}}><span>Project name: </span><span>{project.project_name}</span></div> 
-                                   <div className="user__main-projects-groupProjects-projects-project-description"> <span>Project description:</span> <p>{project.project_description}</p></div> 
+                                    <div className="user__main-projects-groupProjects-projects-project-name" onClick={() => { handleGoToStatus(project.id) }}><span>Project name: </span><span>{project.project_name}</span></div>
+                                    <div className="user__main-projects-groupProjects-projects-project-description"> <span>Project description:</span> <p>{project.project_description}</p></div>
                                 </article>
                                 )
                             })
@@ -108,12 +109,12 @@ function UserProjects({ setHideNav, menu }) {
                     </div>
                 </form>
             </section>
-            <footer className="user__main-projects-footer">
+            {/* <footer className="user__main-projects-footer">
                 <ul className="user__main-projects-footer-list">
                     <li className="user__main-projects-footer-list-item"><span onClick={() => setNav("My tasks")}>My tasks</span></li>
                     <li className="user__main-projects-footer-list-item"><span onClick={() => setNav("Group projects")}>Group projects</span></li>
                 </ul>
-            </footer>
+            </footer> */}
         </section>
     )
 }
