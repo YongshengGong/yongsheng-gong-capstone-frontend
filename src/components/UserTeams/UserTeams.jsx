@@ -267,13 +267,14 @@ function UserTeams({ setHideNav, menu }) {
                             onClick={() => setAddNewTeamButton(true)}
                             src={add}
                         />
+                        <span className="user__main-teams-displayTeams-addNewTeam-description">Create a new team</span>
                         <div className=
                             {addNewTeamButton == true ?
                                 "user__main-teams-displayTeams-addNewTeam-input" :
                                 "user__main-teams-displayTeams-addNewTeam-input user__main-teams-displayTeams-addNewTeam-input--hide"
                             }
                         >
-                            <span>New team name:  <img src={close} alt="a logo of closing a window" onClick={() => { setAddNewTeamButton(false); setError(false); setNewTeam({ ...newTeam, team_name: "" }) }} /></span>
+                            <span><span style={{color:"#13182C"}}>New team name:</span>  <img src={close} alt="a logo of closing a window" onClick={() => { setAddNewTeamButton(false); setError(false); setNewTeam({ ...newTeam, team_name: "" }) }} /></span>
                             <input type="text" value={newTeam.team_name} onChange={(e) => { setNewTeam({ ...newTeam, team_name: e.target.value }) }} />
                             <span className={error == false ? "user__main-teams-displayTeams-addNewTeam-input-error" : "user__main-teams-displayTeams-addNewTeam-input-error user__main-teams-displayTeams-addNewTeam-input-error--error"}>This team name already exists!</span>
                             <button type="submit" className="user__main-teams-displayTeams-addNewTeam-input-button">Add a new team</button>

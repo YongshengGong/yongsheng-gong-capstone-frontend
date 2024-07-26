@@ -5,20 +5,142 @@
 
 .status {
     width: 100%;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 60px);
     padding: 2rem;
     overflow: hidden;
     overflow-y: auto;
 
-    &__toDo {
+    @include tablet {
+        padding: 10rem;
+        padding-top: 2rem;
+    }
+
+    @include desktop {
+        padding: 20rem;
+        padding-top: 2rem;
+    }
+
+    &__nav {
+        &>img {
+            border: 1px solid transparent;
+            border-radius: 50%;
+            padding-left: 0.6rem;
+            padding-top: 0.3rem;
+            padding-bottom: 0.3rem;
+
+            &:hover {
+                border: 1px solid black;
+                cursor: pointer;
+            }
+        }
+
+        &>span {
+            position: relative;
+            bottom: 0.6rem;
+            left: 1rem;
+        }
+    }
+
+    &__toDo,
+    &__inProgress,
+    &__done {
         &-tasks {
             &-task {
                 margin-top: 1rem;
                 width: 100%;
-                padding: 1rem 1rem 1rem 1rem;
+                padding: 0 1rem 1rem 1rem;
                 border: 3px solid #13182C;
                 border-radius: 5px;
                 @include flex(column, space-between, flex-start);
+
+                &:hover {
+                    background-color: rgba(10, 9, 10, 0.1);
+                }
+
+                &-name,
+                &-status,
+                &-description {
+                    width: 100%;
+
+                    &>*:first-child {
+                        margin-top: 1rem;
+                        display: block;
+                        font-weight: bold;
+                        font-size: 22px;
+                        color: #13182C;
+                    }
+
+                    &>*:nth-child(2) {
+                        display: block;
+                        transition: font-size 1s;
+                        border-radius: 5px;
+                        color: #2E66E5;
+                        width: 100%;
+                        overflow-wrap: break-word;
+
+                        .triggered {
+                            font-weight: bold;
+                            font-size: 20px;
+                        }
+
+                        &:hover {
+                            cursor: pointer;
+                            font-size: 20px;
+                            background-color: rgba(36, 33, 36, 0.304);
+                            border-radius: 5px;
+                        }
+                    }
+
+                    &>*:last-child {
+
+                        &>* {
+                            border-radius: 5px;
+                            border: none;
+                        }
+
+                        &>button {
+                            background-color: #0095FF;
+                            border: none;
+                            color: #FFFFFF;
+                            text-align: center;
+                            font-size: 15px;
+                        }
+
+                        &>textArea {
+                            height: 150px;
+                            padding-top: 0.5rem;
+                            padding-left: 0.5rem;
+                        }
+                    }
+
+                    &>form {
+                        width: 100%;
+
+                        &>* {
+                            width: 100%;
+                            display: block;
+                            height: 30px;
+                        }
+                    }
+
+                    &-content {
+                        &--hide {
+                            display: none !important;
+                        }
+                    }
+
+                    &-form {
+                        &--hide {
+                            display: none;
+                        }
+                    }
+                }
+
+                &-status {
+                    &>*:last-child {
+                        height: 30px;
+                    }
+                }
             }
         }
 
@@ -27,41 +149,43 @@
         }
     }
 
-    &__inProgress {
-        &--hide {
-            display: none;
-        }
-    }
-
-    &__done {
-        &--hide {
-            display: none;
-        }
-    }
-
     &__footer {
-        height: 80px;
+        height: 60px;
         width: 100%;
         position: absolute;
         bottom: 0;
         left: 0;
+        border-top: 3px solid #13182C;
+        border-radius: 5px;
+        background-color: #13182C;
+
+        @include tablet {
+            width: calc(100vw - 20rem);
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 3px solid #13182C;
+            border-right: 3px solid #13182C;
+        }
+
+        @include desktop {
+            width: calc(100vw - 40rem);
+        }
 
         &-list {
             height: 100%;
             width: 100%;
-            border-top: 3px solid #13182C;
             list-style: none;
             @include flex(row, center, center);
 
             &-item {
-                color: #13182C;
+                color: white;
                 width: 100%;
                 height: 100%;
                 @include flex(row, center, center);
 
                 & span {
                     &:hover {
-                        border: 1px solid #13182C;
+                        border: 1px solid white;
                         padding: 0.5rem;
                         border-radius: 5px;
                     }
@@ -71,12 +195,12 @@
                     font-weight: bold;
 
                     & span {
-                        border: 3px solid #13182C;
+                        border: 3px solid white;
                         padding: 0.5rem;
                         border-radius: 5px;
 
                         &:hover {
-                            border: 3px solid #13182C;
+                            border: 3px solid white;
                             padding: 0.5rem;
                             border-radius: 5px;
                         }
