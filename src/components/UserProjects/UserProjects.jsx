@@ -94,6 +94,7 @@ function UserProjects({ setHideNav, menu }) {
                         "user__main-projects-groupProjects-addNewProject-add user__main-projects-groupProjects-addNewProject-add--hide"}
                         onClick={() => { setAddNewProject(true) }}
                     />
+                    <span className="user__main-projects-groupProjects-addNewProject-description">Create a new project for this team</span> 
                     <div className=
                         {addNewProject == true ?
                             "user__main-projects-groupProjects-addNewProject-input" :
